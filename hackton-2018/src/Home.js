@@ -9,11 +9,13 @@ import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import ResearchCollaborators from './ResearchCollaborators'
-import Login from './Login'
-import fire from './config/Fire'
-import App from './App'
+
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import ResearchCollaborators from './ResearchCollaborators'
+// import Login from './Login'
+// import fire from './config/Fire'
+// import App from './App'
+
 
 import {
   Collapse,
@@ -32,7 +34,7 @@ const zoomLevel = 10;
 class Home extends React.Component{
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(props);
+
     this.toggle = this.toggle.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
 
@@ -42,10 +44,6 @@ class Home extends React.Component{
       modal: false
     };
   }
-
-logout () {
-  fire.auth().signOut();
-}
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
@@ -63,29 +61,16 @@ logout () {
 
   render(){
     const Icon= new L.Icon({
-      iconUrl: '/images/icon_profile.png',
-      popupAnchor: null,
-      shadowUrl: null,
+        iconUrl: '/images/icon_profile.png',
+        popupAnchor: null,
+        shadowUrl: null,
 
-      iconSize: new L.Point(30, 30),
-      className: 'leaflet-div-icon'
-    }
+        iconSize: new L.Point(30, 30),
+        className: 'leaflet-div-icon'
+      }
 
     );
     return(
-
-      // <div>You are Home !</div>
-      // <br/>
-      // <button onClick={this.logout}>Logout</button>
-      // <br/><br/>
-      // <Col xs="6">
-      //     <Button color="danger" block>Recherche collaborateurs</Button>
-      // </Col>
-      // <br/>
-      // {' '}
-      // <Col xs="6">
-      //   <ResearchCollaborators/>
-      // </Col>
         <div>
           <MyNavBar />
           <Nav justified fill pills>

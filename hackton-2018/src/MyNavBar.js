@@ -12,6 +12,7 @@ import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import fire from './config/Fire';
+import L from 'leaflet';
 import {
   Collapse,
   Navbar,
@@ -33,7 +34,8 @@ class MyNavBar extends React.Component{
         this.toggleDropdown = this.toggleDropdown.bind(this)
         this.state = {
             modal: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            marker:new Array()
         };
     }
 
