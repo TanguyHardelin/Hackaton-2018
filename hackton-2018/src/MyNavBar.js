@@ -38,7 +38,8 @@ class MyNavBar extends React.Component{
 
         this.icon= new L.Icon({
             iconUrl: '/images/poi.png',
-           
+            popupAnchor: null,
+            shadowUrl: null,
           
             iconSize: new L.Point(30, 30),
             className: 'leaflet-div-icon'
