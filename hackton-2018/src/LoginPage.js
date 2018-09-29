@@ -1,11 +1,14 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import { Button } from 'reactstrap';
 
 class LoginPage extends React.Component{
   render(){
     return(
         <div>
-          <Button color="primary" block>primary</Button>{' '}
+          <Container>
+            <Button outline color="danger" block>Join with google</Button>{' '}
+          </Container>
 
         </div>
     )
