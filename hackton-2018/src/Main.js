@@ -5,6 +5,7 @@ import Login from './Login';
 import Home from './Home';
 import App from './App';
 import CustomHistory from './CustomHistory';
+import SignUpModal from './SignUpModal';
 
 class Main extends React.Component{
 
@@ -15,6 +16,7 @@ class Main extends React.Component{
               <Route path="/login" component={Login}/>
               <Route path="/home" component={Home}/>
               <Route path="/app" component={App}/>
+              <Route path="/signupmodal" component={SignUpModal}/>
               <Redirect from="/" to="/app"/>
           </div>
       </Router>

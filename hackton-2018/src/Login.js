@@ -3,50 +3,40 @@ import { Container, Row, Col } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+
 import fire from './config/Fire';
 import Home from './Home'
 import App from './App'
+import SignUpModal from './SignUpModal'
 
 class Login extends Component{
 
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(props);
+    this.toggle = this.toggle.bind(this);
     this.state = {
       email:'',
-      password:''
+      password:'',
+      modal: false
     }
   }
 
   login(e) {
     e.preventDefault();
-    let email=document.querySelector('#emailInput').value;
-    let password=document.querySelector('#passwordInput').value;
+    let email = document.querySelector('#emailInput').value;
+    let password = document.querySelector('#passwordInput').value;
     fire.auth().signInWithEmailAndPassword(email, password).then((u)=>{
     }).catch((error) => {
         console.log(error);
       });
   }
 
-  signup(e) {
-    e.preventDefault();
-    let email=document.querySelector('#emailInput').value;
-    let password=document.querySelector('#passwordInput').value;
-    fire.auth().createUserWithEmailAndPassword(email, password)
-    .catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode == 'auth/weak-password') {
-        alert('The password is too weak.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
     });
   }
-
   render(){
     return(
       <div>
@@ -54,11 +44,11 @@ class Login extends Component{
           <Form >
             <FormGroup>
             <Label for="exampleEmail" >Email</Label>
-            <Input type="email"  id="emailInput" placeholder="Enter email" />
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </FormGroup> <FormGroup>
-              <Label for="exampleEmail">Password</Label>
-              <Input type="password" id="passwordInput" placeholder="password" />
+            <Input type="email"  id="emailInput" placeholder="Email" />
+          </FormGroup>
+          <FormGroup>
+              <Label for="exampleEmail">Mot de passe</Label>
+              <Input type="password" id="passwordInput" placeholder="Mot de passe" />
             </FormGroup>
           </Form>
 
@@ -66,13 +56,20 @@ class Login extends Component{
         <Container >
           <Row>
             <Col xs="6">
-              <Button block onClick={this.signup}>Sign up</Button>
+                <Button color="danger" block onClick={this.toggle}>Inscription</Button>
             </Col>
+            {/* <Col xs="6">
+              <Button block onClick={this.signup}>Sign up</Button>
+            </Col> */}
             <Col xs="6">
-              <Button onClick={this.login} color="success" block>Login</Button>
+              <Button onClick={this.login} color="success" block>Connexion</Button>
             </Col>
           </Row>
         </Container>
+
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <SignUpModal />
+        </Modal>
       </div>
     )
   }

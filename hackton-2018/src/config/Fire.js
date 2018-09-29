@@ -1,6 +1,7 @@
 
 import firebase from 'firebase'
-  // Initialize Firebase
+
+// Initialize Firebase
 var config = {
   apiKey: "AIzaSyBN7La9jq4dkEVHKkoWhyAGDdJ_7A-foB4",
   authDomain: "hackton-2018.firebaseapp.com",
