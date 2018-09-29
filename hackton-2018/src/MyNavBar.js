@@ -10,7 +10,8 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { Badge } from 'reactstrap';
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import fire from './config/Fire';
 import {
   Collapse,
   Navbar,
@@ -19,6 +20,8 @@ import {
   Nav,
   NavItem,
   NavLink } from 'reactstrap';
+
+
 
 
 class MyNavBar extends React.Component{
@@ -49,6 +52,11 @@ class MyNavBar extends React.Component{
             dropdownOpen: !prevState.dropdownOpen
         }));
     }
+
+    logout () {
+      fire.auth().signOut();
+    }
+
     render(){
         return (
             <div>
@@ -76,11 +84,11 @@ class MyNavBar extends React.Component{
                         <DropdownItem header>Paramètres</DropdownItem>
                         <DropdownItem>Paramètres</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem>Deconnexion</DropdownItem>
+                        <DropdownItem onClick={this.logout}>Deconnexion</DropdownItem>
                     </DropdownMenu>
                     </Dropdown>
                     <Input placeholder="Ajouter un filtre" />
-                
+
                 </Navbar>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -99,12 +107,12 @@ class MyNavBar extends React.Component{
                             <p>Selectionner une localisation</p>
                             <Map center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
                                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                
-                                
+
+
                             </Map>
 
                             <Button>OK</Button>
-                        
+
                         </Form>
                     </Container>
                 </Modal>

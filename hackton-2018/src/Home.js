@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { Button } from 'reactstrap';
 import { Map, TileLayer, Marker,Popup ,DivOverlay } from 'react-leaflet';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { TabContent, TabPane,  Card, CardTitle, CardText } from 'reactstrap';
@@ -9,7 +8,6 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
-
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ResearchCollaborators from './ResearchCollaborators'
@@ -36,18 +34,18 @@ class Home extends React.Component{
     super(props);
     this.logout = this.logout.bind(props);
     this.toggle = this.toggle.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+
     this.state = {
+      activeTab: '1',
+      dropdownOpen: false,
       modal: false
     };
   }
 
-    this.toggle = this.toggle.bind(this);
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.state = {
-      activeTab: '1',
-      dropdownOpen: false
-    };
-  }
+logout () {
+  fire.auth().signOut();
+}
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
@@ -56,6 +54,7 @@ class Home extends React.Component{
       });
     }
   }
+
   toggleDropdown(){
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
