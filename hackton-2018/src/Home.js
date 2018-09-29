@@ -106,7 +106,7 @@ class Home extends React.Component{
                     iconUrl: image_url,
                     popupAnchor: null,
                     shadowUrl: null,
-                    iconSize: new L.Point(30, 30),
+                    iconSize: new L.Point(60, 60),
                     className: 'leaflet-div-icon'
                   }
                 );
