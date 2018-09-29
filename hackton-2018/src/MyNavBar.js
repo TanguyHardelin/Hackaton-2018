@@ -76,7 +76,7 @@ class MyNavBar extends React.Component{
                         <DropdownItem header>Paramètres</DropdownItem>
                         <DropdownItem>Paramètres</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem>Deconnexion</DropdownItem>
+                        <DropdownItem color='danger'>Deconnexion</DropdownItem>
                     </DropdownMenu>
                     </Dropdown>
                     <Input placeholder="Ajouter un filtre" />
@@ -85,28 +85,36 @@ class MyNavBar extends React.Component{
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <Container fluid>
+                        <h3>  </h3>
                         <Form>
-                            <legend>Publier une annonce</legend>
-                            <FormGroup check><Label check><Input type="radio" name="radio1" />{' '}Musicien</Label></FormGroup>
-                            <FormGroup check><Label check><Input type="radio" name="radio1" />{' '}Acteur</Label></FormGroup>
-                            <FormGroup check><Label check><Input type="radio" name="radio1" />{' '}Peintre</Label></FormGroup>
-
                             <FormGroup>
-                                <Label for="exampleEmail">Type</Label>
-                                <Input type="text" id="exampleEmail" placeholder="Type" />
+                                <Label for="exampleSelect">Cathegorie</Label>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>Musicien</option>
+                                    <option>Peintre</option>
+                                    <option>Théatre</option>
+                                    <option>Photographe</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="specialiteeInput">Spécialitée</Label>
+                                <Input type="text" id="specialiteeInput" placeholder="specialitee" />
                             </FormGroup>
 
-                            <p>Selectionner une localisation</p>
-                            <Map center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                
-                                
-                            </Map>
+                            <FormGroup>
+                                <Label for="styleInput">Style</Label>
+                                <Input type="text" id="styleInput" placeholder="style" />
+                            </FormGroup>
 
-                            <Button>OK</Button>
-                        
+                            <Label for="mapForm">Localisation</Label>
+                            <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
+                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            </Map>                         
                         </Form>
+                        
                     </Container>
+                    <p>    </p>
+                    <Button color='success' block>Publier une annonce</Button>
                 </Modal>
             </div>
         )
