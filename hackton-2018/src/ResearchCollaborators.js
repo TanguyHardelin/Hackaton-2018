@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Map, TileLayer, Marker,Popup ,DivOverlay } from 'react-leaflet';
 import fire from './config/Fire'
 import db from './config/Firestore'
 
@@ -10,7 +11,7 @@ class ResearchCollaborators extends React.Component {
 
   constructor(props) {
     super(props);
-    this.research = this.research.bind(this);
+    this.post = this.post.bind(this);
     this.state = {
       idUser: '',
       location: '',
@@ -19,17 +20,25 @@ class ResearchCollaborators extends React.Component {
     };
   }
 
-  research(e) {
+  post(e) {
       e.preventDefault();
-      let location = document.querySelector('#locationInput').value;
-      let searchRequest = document.querySelector('#searchRequestInput').value;
+      let category = document.querySelector('#categoryInput').value;
+      let speciality = document.querySelector('#specialityInput').value;
+      let style = document.querySelector('#styleInput').value;
+
       var user = fire.auth().currentUser;
       let uid = user.uid;
 
-        db.collection("ResearchCollaborators").add({
+      let latitude = ''; // todo
+      let longitude = ''; // todo
+
+        db.collection("Posts").add({
             uid: uid,
-            location: location,
-            searchRequest: searchRequest
+            category: category,
+            speciality: speciality,
+            style: style,
+            latitude: latitude,
+            longitude: longitude
         })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
@@ -42,21 +51,40 @@ class ResearchCollaborators extends React.Component {
   render() {
     return (
       <div>
-          <Row>
-            <Col xs="6">
-              <FormGroup>
-                <Input type="text"  id="searchRequestInput" placeholder="Que recherchez vous ? (Musiciens, chanteurs, peintres etc)" />
-              </FormGroup>
-            </Col>
-            <Col xs="6">
-              <FormGroup>
-                <Input type="text"  id="locationInput" placeholder="Localisation recherchée" />
-              </FormGroup>
-            </Col>
-            <Col xs="6">
-              <Button color="primary" onClick={this.research}>Recherche</Button>
-            </Col>
-          </Row>
+
+        <Container fluid>
+            <Form>
+
+                <FormGroup>
+                    <Label for="exampleSelect">Catégories</Label>
+                    <Input type="select" name="select" id="categoryInput">
+                        <option>Musicien</option>
+                        <option>Peintre</option>
+                        <option>Acteur</option>
+                        <option>Photographe</option>
+                    </Input>
+                </FormGroup>
+
+                <FormGroup>
+                    <Label for="specialityInput">Spécialité</Label>
+                    <Input type="text" id="specialityInput" placeholder="Specialitée" />
+                </FormGroup>
+
+                <FormGroup>
+                    <Label for="styleInput">Style</Label>
+                    <Input type="text" id="styleInput" placeholder="style" />
+                </FormGroup>
+
+                <Label for="mapForm">Localisation</Label>
+                <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                </Map>
+            </Form>
+
+        </Container>
+        <p>    </p>
+        <Button color='success' block onClick={this.post}>Publier une annonce</Button>
+        
       </div>
     );
   }

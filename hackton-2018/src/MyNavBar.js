@@ -20,6 +20,7 @@ import {
   Nav,
   NavItem,
   NavLink } from 'reactstrap';
+  import ResearchCollaborators from './ResearchCollaborators'
 
 
 
@@ -70,7 +71,7 @@ class MyNavBar extends React.Component{
                         <DropdownItem onClick={()=>{this.seeProfile()}}>
                             <div style={{display:'flex',flexDirection:"row"}}>
                                 <img src="/images/icon_profile.png" style={{width:'25px',height:'25px'}}/>
-                                <p>NOM Prénom</p>
+                                <p>Non Prénom</p>
                             </div>
                         </DropdownItem>
                         <DropdownItem>
@@ -79,50 +80,18 @@ class MyNavBar extends React.Component{
                                 <p> Messages</p>
                             </div>
                         </DropdownItem>
-                        <DropdownItem onClick={this.toggle}>Je recherche une personne</DropdownItem>
+                        <DropdownItem onClick={this.toggle}>Publier une annonce</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem header>Paramètres</DropdownItem>
                         <DropdownItem>Paramètres</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem color='danger' onClick={this.logout}>Deconnexion</DropdownItem>
+                        <DropdownItem color='danger' onClick={this.logout}>Déconnexion</DropdownItem>
                     </DropdownMenu>
                     </Dropdown>
                     <Input placeholder="Ajouter un filtre" />
-
                 </Navbar>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <Container fluid>
-                        <h3>  </h3>
-                        <Form>
-                            <FormGroup>
-                                <Label for="exampleSelect">Cathegorie</Label>
-                                <Input type="select" name="select" id="exampleSelect">
-                                    <option>Musicien</option>
-                                    <option>Peintre</option>
-                                    <option>Théatre</option>
-                                    <option>Photographe</option>
-                                </Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="specialiteeInput">Spécialitée</Label>
-                                <Input type="text" id="specialiteeInput" placeholder="specialitee" />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="styleInput">Style</Label>
-                                <Input type="text" id="styleInput" placeholder="style" />
-                            </FormGroup>
-
-                            <Label for="mapForm">Localisation</Label>
-                            <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                            </Map>
-                        </Form>
-
-                    </Container>
-                    <p>    </p>
-                    <Button color='success' block>Publier une annonce</Button>
+                  <ResearchCollaborators/>
                 </Modal>
             </div>
         )
