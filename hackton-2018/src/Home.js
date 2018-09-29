@@ -16,6 +16,7 @@ import {
   Nav,
   NavItem,
   NavLink } from 'reactstrap';
+import MyNavBar from './MyNavBar';
 
 
 const mapCenter = [48.42333164, -71.055499778];
@@ -50,22 +51,7 @@ class Home extends React.Component{
     
     return(
         <div>
-          <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">Application</NavbarBrand>
-            <Input placeholder="Rechercher" />
-            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} inNavbar>
-              <DropdownToggle nav>
-                <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
-                <DropdownItem disabled>Action</DropdownItem>
-                <DropdownItem>Another Action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Another Action</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </Navbar>
+          <MyNavBar />
           <Nav justified fill pills>
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
@@ -80,96 +66,36 @@ class Home extends React.Component{
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
-              <Map center={mapCenter} zoom={zoomLevel}>
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+              <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               </Map>
             </TabPane>
             <TabPane tabId="2">
-            <ListGroup>
-              <ListGroupItem>
-                <Container fluid>
-                  <Row>
-                    <Col xs="2">
-                      <img src="/images/icon_profile.png" />
-                    </Col>
-                    <Col xs="10">
-                      <h2>Name</h2>
-                      <h5>Spécialitée</h5>
-                      <h5>Localisation</h5>
-                      <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Container fluid>
-                  <Row>
-                    <Col xs="2">
-                      <img src="/images/icon_profile.png" />
-                    </Col>
-                    <Col xs="10">
-                      <h2>Name</h2>
-                      <h5>Spécialitée</h5>
-                      <h5>Localisation</h5>
-                      <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Container fluid>
-                  <Row>
-                    <Col xs="2">
-                      <img src="/images/icon_profile.png" />
-                    </Col>
-                    <Col xs="10">
-                      <h2>Name</h2>
-                      <h5>Spécialitée</h5>
-                      <h5>Localisation</h5>
-                      <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Container fluid>
-                  <Row>
-                    <Col xs="2">
-                      <img src="/images/icon_profile.png" />
-                    </Col>
-                    <Col xs="10">
-                      <h2>Name</h2>
-                      <h5>Spécialitée</h5>
-                      <h5>Localisation</h5>
-                      <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroupItem>
-              <ListGroupItem>
-                <Container fluid>
-                  <Row>
-                    <Col xs="2">
-                      <img src="/images/icon_profile.png" />
-                    </Col>
-                    <Col xs="10">
-                      <h2>Name</h2>
-                      <h5>Spécialitée</h5>
-                      <h5>Localisation</h5>
-                      <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroupItem>
+              <ListGroup>
+                <ListGroupItem>
+                  <Container fluid>
+                    <Row>
+                      <Col xs="2">
+                        <img src="/images/icon_profile.png" />
+                      </Col>
+                      <Col xs="10">
+                        <h2>Name</h2>
+                        <h5>Spécialitée</h5>
+                        <h5>Localisation</h5>
+                        <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
+                      </Col>
+                    </Row>
+                  </Container>
+                </ListGroupItem>
               
-            </ListGroup>
+                
+              </ListGroup>
             </TabPane>
           </TabContent>
           
         </div>
     )
-
   }
-};// TEST
+};
 
 export default Home;
