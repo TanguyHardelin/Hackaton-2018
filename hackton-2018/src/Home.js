@@ -8,6 +8,8 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
+import L from 'leaflet';
+
 import {
   Collapse,
   Navbar,
@@ -48,7 +50,16 @@ class Home extends React.Component{
   }
   
   render(){
-    
+    const Icon= new L.Icon({
+      iconUrl: '/images/icon_profile.png',
+      popupAnchor: null,
+      shadowUrl: null,
+     
+      iconSize: new L.Point(30, 30),
+      className: 'leaflet-div-icon'
+    }
+
+    );
     return(
         <div>
           <MyNavBar />
@@ -68,6 +79,9 @@ class Home extends React.Component{
             <TabPane tabId="1">
               <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={mapCenter} icon={Icon}>
+                </Marker>
+                
               </Map>
             </TabPane>
             <TabPane tabId="2">

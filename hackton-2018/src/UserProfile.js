@@ -40,7 +40,6 @@ class UserProfile extends React.Component{
                 <Label for="groupe">Groupe</Label>
                 <Row id="groupe">
                     <Col xs="12">
-                        
                         <h5>Age: </h5>
                         <p>XX ans</p>
                     </Col>
