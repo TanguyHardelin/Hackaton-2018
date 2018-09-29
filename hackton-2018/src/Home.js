@@ -9,6 +9,7 @@ import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
 import db from './config/Firestore'
+import fire from './config/Fire'
 
 
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -39,11 +40,19 @@ class Home extends React.Component{
     this.toggle = this.toggle.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.updateMarker = this.updateMarker.bind(this);
+
+    this.user = {
+          name: '',
+          imageurl: '',
+          speciality: '',
+          age: '',
+          description: ''
+    }
+
     this.state = {
       activeTab: '1',
       dropdownOpen: false,
       modal: false,
-      users: [],
       markers:new Array()
     };
 
@@ -64,6 +73,18 @@ class Home extends React.Component{
     this.updateMarker();
 
     setInterval(this.updateState,500);
+  }
+
+  getInfos() {
+    let self=this;
+    var user = fire.auth().currentUser;
+    var userInfos = [
+      "firstName": user.firstname,
+      "lastName": user.lastname,
+      "vocations" : user.vocations
+
+    ];
+    return userInfos;
   }
 
   updateMarker() {
