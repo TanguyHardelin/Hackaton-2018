@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link , Redirect } from "react-router-dom";
 import LoginPage  from './LoginPage';
 import Login from './Login';
-import Home from './Home'
-import CustomHistory from './CustomHistory'
+import Home from './Home';
+import App from './App';
+import CustomHistory from './CustomHistory';
 
 class Main extends React.Component{
 
@@ -12,8 +13,9 @@ class Main extends React.Component{
       <Router history={CustomHistory}>
           <div>
               <Route path="/login" component={Login}/>
-              <Route path="/app/home" component={Home}/>
-              <Redirect from="/" to="/login"/>
+              <Route path="/home" component={Home}/>
+              <Route path="/app" component={App}/>
+              <Redirect from="/" to="/app"/>
           </div>
       </Router>
     )
