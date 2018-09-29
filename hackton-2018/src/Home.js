@@ -51,6 +51,7 @@ class Home extends React.Component{
     this.dropdownOpen=false
 
     this.updateState=this.updateState.bind(this);
+    this.updateMarker = this.updateMarker.bind(this);
 
     this.icon= new L.Icon({
         iconUrl: '/images/poi.png',
@@ -59,10 +60,13 @@ class Home extends React.Component{
       }
     );
 
-    setInterval(this.updateMarker,500);
+    // setInterval(this.updateMarker,500);
+    this.updateMarker();
+
     setInterval(this.updateState,500);
   }
-  updateMarker(){
+
+  updateMarker() {
     //TODO get info from API
     let self=this;
     db.collection("Posts").get()
@@ -138,7 +142,7 @@ class Home extends React.Component{
   render(){
     return(
         <div>
-          <MyNavBar />
+          <MyNavBar updateMarker ={this.updateMarker}/>
           <Nav justified fill pills>
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>

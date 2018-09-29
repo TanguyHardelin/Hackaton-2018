@@ -7,13 +7,16 @@ import { Map, TileLayer, Marker,Popup ,DivOverlay } from 'react-leaflet';
 import fire from './config/Fire'
 import db from './config/Firestore'
 import L from 'leaflet';
+import Home from './Home'
 
 class ResearchCollaborators extends React.Component {
 
   constructor(props) {
     super(props);
+  
     this.post = this.post.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
+
     this.state = {
       idUser: '',
       location: '',
@@ -37,12 +40,10 @@ class ResearchCollaborators extends React.Component {
       let category = document.querySelector('#categoryInput').value;
       let speciality = document.querySelector('#specialityInput').value;
       let style = document.querySelector('#styleInput').value;
+      let descriptif = document.querySelector('#descriptifInput').value;
 
       var user = fire.auth().currentUser;
       let uid = user.uid;
-
-      let latitude = ''; // todo
-      let longitude = ''; // todo
 
         db.collection("Posts").add({
             uid: uid,
@@ -50,7 +51,8 @@ class ResearchCollaborators extends React.Component {
             speciality: speciality,
             style: style,
             latitude: this.latitude,
-            longitude: this.longitude
+            longitude: this.longitude,
+            descriptif: descriptif
         })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
@@ -58,7 +60,10 @@ class ResearchCollaborators extends React.Component {
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
+
+      this.props.updateMarker();
     }
+
     handleMapClick(e){
 
         let latlng=e.latlng;
@@ -100,6 +105,11 @@ class ResearchCollaborators extends React.Component {
                     <Input type="text" id="styleInput" placeholder="style" />
                 </FormGroup>
 
+                <FormGroup>
+                    <Label for="styleInput">Description</Label>
+                    <Input type="text" id="descriptifInput" placeholder="Texte descriptif de votre annonce" />
+                </FormGroup>
+
                 <Label for="mapForm">Localisation</Label>
                 <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}} onclick={this.handleMapClick}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -107,7 +117,6 @@ class ResearchCollaborators extends React.Component {
                     {this.state.marker.map((e)=>(
                         <Marker position={e} icon={this.icon}></Marker>
                     ))}
-
                 </Map>
             </Form>
 

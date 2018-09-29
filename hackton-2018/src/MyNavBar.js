@@ -23,26 +23,29 @@ import {
   NavLink } from 'reactstrap';
   import ResearchCollaborators from './ResearchCollaborators'
 
-
-
-
 class MyNavBar extends React.Component{
+
     constructor(props) {
         super(props);
-
+        this.passUpdateMarker=this.passUpdateMarker.bind(this)
         this.toggle=this.toggle.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this)
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+
         this.state = {
             modal: false,
             dropdownOpen: false,
             marker:new Array()
         };
     }
+    passUpdateMarker(){
+      this.props.updateMarker();
+    }
 
     seeProfile(){
         console.log("TOTO");
         //<Redirect to='/profile' />
     }
+
     toggle() {
         console.log("TITI")
         this.setState({
@@ -93,7 +96,7 @@ class MyNavBar extends React.Component{
                 </Navbar>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                  <ResearchCollaborators/>
+                  <ResearchCollaborators updateMarker={this.passUpdateMarker}/>
                 </Modal>
             </div>
         )
