@@ -26,25 +26,23 @@ class UserProfile extends React.Component{
     
     return(
         <div>
-            <MyNavBar />
-            <Container>
+            <Container fluid>
                 <Row>
                     <Col xs="2">
-                        <img src="/images/icon_profile.png" />
+                        <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
                     </Col>
                     <Col xs="10">
                         <h1>NOM prénom</h1>
-                        <h5>Quanton Ville</h5>
                     </Col>
                 </Row>
-                <Label for="groupe">Groupe</Label>
-                <Row id="groupe">
-                    <Col xs="12">
-                        <h5>Age: </h5>
-                        <p>XX ans</p>
-                    </Col>
-                </Row>
+
+                <h5>20 ans</h5>
+                <h5>Musicien: guitariste</h5>
+                <p>Lorem Ipsum</p>
+                
+                <Button color='success' block onClick={this.props.cb}>Modifier</Button>
             </Container>
+            
         </div>
     )
   }

@@ -8,6 +8,78 @@ import fire from './config/Fire'
 import db from './config/Firestore'
 import L from 'leaflet';
 
+/*
+    <option>Blues</option>
+                        <option>Drum and bass</option>
+                        <option>Dubstep</option>
+                        <option>Electronique</option>
+                        <option>Folk</option>
+                        <option>Funk</option>
+                        <option>Gospel</option>
+                        <option>Heavy metal</option>
+                        <option>Jazz</option>
+                        <option>Classique</option>
+                        <option>Country</option>
+                        <option>Instrumentale</option>
+                        <option>Latine</option>
+                        <option>House</option>
+                        <option>Techno</option>
+                        <option>Pop</option>
+                        <option>Soul</option>
+                        <option>Rap</option>
+                        <option>Rock</option>
+                        <option>Reggae</option>
+                        <option>RnB</option>     
+*/
+/*
+<option>Guitare acoustique</option>
+                        <option>Guitare électrique</option>
+                        <option>Guitare classique</option>
+                        <option>Basse</option>
+                        <option>Ukulélé</option>
+                        <option>Banjo</option>
+                        <option>Contrebasse</option>
+                        <option>Batterie</option>
+                        <option>D'jembé</option>
+                        <option>Xylophone</option>
+                        <option>Piano</option>
+                        <option>Clavecin</option>
+                        <option>Harmonica</option>
+                        <option>Synthétiseur</option>
+                        <option>Accordéons</option>
+                        <option>Triangle</option>
+                        <option>Trompette</option>
+                        <option>Flûte</option>
+                        <option>Saxophone</option>
+                        <option>Clarinette</option>
+                        <option>DJ</option>
+                    </Input>    
+*/
+
+/*
+<option>Blues</option>
+                        <option>Drum and bass</option>
+                        <option>Dubstep</option>
+                        <option>Electronique</option>
+                        <option>Folk</option>
+                        <option>Funk</option>
+                        <option>Gospel</option>
+                        <option>Heavy metal</option>
+                        <option>Jazz</option>
+                        <option>Classique</option>
+                        <option>Country</option>
+                        <option>Instrumentale</option>
+                        <option>Latine</option>
+                        <option>House</option>
+                        <option>Techno</option>
+                        <option>Pop</option>
+                        <option>Soul</option>
+                        <option>Rap</option>
+                        <option>Rock</option>
+                        <option>Reggae</option>
+                        <option>RnB</option>
+                    </Input>   
+                */
 class ResearchCollaborators extends React.Component {
 
   constructor(props) {
@@ -84,20 +156,29 @@ class ResearchCollaborators extends React.Component {
                     <Label for="exampleSelect">Catégories</Label>
                     <Input type="select" name="select" id="categoryInput">
                         <option>Musicien</option>
+                        <option>Chanteur</option>
                         <option>Peintre</option>
-                        <option>Acteur</option>
-                        <option>Photographe</option>
+                        <option>Sculpteur</option>
+                        <option>Audiovisuel</option>
+                        <option>Comédien</option>
                     </Input>
                 </FormGroup>
 
                 <FormGroup>
                     <Label for="specialityInput">Spécialité</Label>
-                    <Input type="text" id="specialityInput" placeholder="Specialitée" />
+                    <Input type="text" id="specialityInput" placeholder="Specialité" />
                 </FormGroup>
 
                 <FormGroup>
+                    <Label for="specialityInput">Spécialité</Label>
+                    <Input type="text" id="specialityInput" placeholder="Specialité" />
+                </FormGroup>
+      
+
+                <FormGroup>
                     <Label for="styleInput">Style</Label>
-                    <Input type="text" id="styleInput" placeholder="style" />
+                    <Input type="text" id="styleInput" placeholder="Style" />
+                         
                 </FormGroup>
 
                 <Label for="mapForm">Localisation</Label>
