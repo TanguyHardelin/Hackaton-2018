@@ -52,47 +52,78 @@ class Home extends React.Component{
 
     this.updateState=this.updateState.bind(this);
 
+    this.icon= new L.Icon({
+        iconUrl: '/images/poi.png',
+        iconSize: new L.Point(30, 30),
+        className: 'leaflet-div-icon'
+      }
+    );
+
     setInterval(this.updateMarker,500);
     setInterval(this.updateState,500);
   }
   updateMarker(){
     //TODO get info from API
-
-    db.collection("cities").where("capital", "==", true)
-    .get()
+    let self=this;
+    db.collection("Posts").get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+
+            // console.log(doc.id, " => ", doc.data());
+            //  console.log( "category : " + doc.data().category);
+                let pos=[doc.data().latitude, doc.data().longitude];
+                console.log("pos : "+ pos);
+              //  pos = [48.39820893678183, -71.15295410156251]
+                let image_url='/images/poi.png'
+
+                switch(doc.data().category) {
+                    case "Peintre":
+                          image_url = "/images/paint.svg"
+                          break;
+                    case "Musicien":
+                          image_url = "/images/note.svg"
+                          break;
+                    case "Acteur":
+                          image_url = "/images/actor.svg"
+                          break;
+                    case "Photographe":
+                          image_url = "/images/note.svg"
+                          break;
+                    case "Chanteur":
+                          image_url = "/images/sing.svg"
+                          break;
+                    case "Sculpteur":
+                          image_url = "/images/sculptor.svg"
+                          break;
+                    case "Realisateur":
+                          image_url = "/images/clapboard.svg"
+                          break;
+                    default:
+                          break;
+                }
+
+                let icon=new L.Icon({
+                    iconUrl: image_url,
+                    popupAnchor: null,
+                    shadowUrl: null,
+                    iconSize: new L.Point(30, 30),
+                    className: 'leaflet-div-icon'
+                  }
+                );
+
+                self.state.markers.push({icon:icon,pos:pos})
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-
-
-
-
-    let pos=[0,0];
-
-    let image_url=''
-    let icon=new L.Icon({
-        iconUrl: image_url,
-        popupAnchor: null,
-        shadowUrl: null,
-
-        iconSize: new L.Point(30, 30),
-        className: 'leaflet-div-icon'
-      }
-
-    );
-    this.state.markers.push({icon:icon,pos:pos})
   }
 
   updateState(){
-    console.log('TOTO')
+    console.log('UPDATE STATE')
     this.setState(this.state);
   }
+
   toggle(tab) {
     console.log(tab);
     if (this.state.activeTab !== tab) {
@@ -124,12 +155,11 @@ class Home extends React.Component{
             <TabPane tabId="1">
               <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                {
-                  this.state.markers.map((e)=>{
-                    <Marker position={e.pos} icon={e.icon}></Marker>
-                  })
-                }
 
+                {this.state.markers.map((e)=>(
+                    <Marker position={ e.pos} icon={e.icon}></Marker>
+                ))}
+                    {/* <Marker position={ [48.39820893678183, -71.15295410156251]} icon={this.icon}></Marker> */}
 
               </Map>
             </TabPane>
