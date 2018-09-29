@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 import fire from './config/Fire';
 import Home from './Home'
 import App from './App'
