@@ -10,13 +10,6 @@ import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
 
-
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import ResearchCollaborators from './ResearchCollaborators'
-import Login from './Login'
-import fire from './config/Fire'
-import App from './App'
-
 import {
   Collapse,
   Navbar,
@@ -34,12 +27,6 @@ const zoomLevel = 10;
 class Home extends React.Component{
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      modal: false
-    };
-  }
 
     this.toggle = this.toggle.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -61,32 +48,19 @@ class Home extends React.Component{
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
-
+  
   render(){
     const Icon= new L.Icon({
-      iconUrl: '/images/icon_profile.png',
-      popupAnchor: null,
-      shadowUrl: null,
-
-      iconSize: new L.Point(30, 30),
-      className: 'leaflet-div-icon'
-    }
+        iconUrl: '/images/icon_profile.png',
+        popupAnchor: null,
+        shadowUrl: null,
+      
+        iconSize: new L.Point(30, 30),
+        className: 'leaflet-div-icon'
+      }
 
     );
     return(
-
-      // <div>You are Home !</div>
-      // <br/>
-      // <button onClick={this.logout}>Logout</button>
-      // <br/><br/>
-      // <Col xs="6">
-      //     <Button color="danger" block>Recherche collaborateurs</Button>
-      // </Col>
-      // <br/>
-      // {' '}
-      // <Col xs="6">
-      //   <ResearchCollaborators/>
-      // </Col>
         <div>
           <MyNavBar />
           <Nav justified fill pills>
@@ -107,7 +81,7 @@ class Home extends React.Component{
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <Marker position={mapCenter} icon={Icon}>
                 </Marker>
-
+                
               </Map>
             </TabPane>
             <TabPane tabId="2">
@@ -127,12 +101,12 @@ class Home extends React.Component{
                     </Row>
                   </Container>
                 </ListGroupItem>
-
-
+              
+                
               </ListGroup>
             </TabPane>
           </TabContent>
-
+          
         </div>
     )
   }

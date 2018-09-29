@@ -11,6 +11,7 @@ import { Badge } from 'reactstrap';
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom'
+import L from 'leaflet';
 import {
   Collapse,
   Navbar,
@@ -25,12 +26,25 @@ class MyNavBar extends React.Component{
     constructor(props) {
         super(props);
 
+        this.handleMapClick=this.handleMapClick.bind(this);
+
         this.toggle=this.toggle.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this)
         this.state = {
             modal: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            marker:new Array()
         };
+
+        this.icon= new L.Icon({
+            iconUrl: '/images/poi.png',
+           
+          
+            iconSize: new L.Point(30, 30),
+            className: 'leaflet-div-icon'
+          }
+    
+        );
     }
 
     seeProfile(){
@@ -48,6 +62,15 @@ class MyNavBar extends React.Component{
         this.setState(prevState => ({
             dropdownOpen: !prevState.dropdownOpen
         }));
+    }
+    handleMapClick(e){
+        let latlng=e.latlng;
+        if(this.state.marker.length<1)
+            this.state.marker.push([latlng.lat,latlng.lng]);
+        else{
+            this.state.marker[0]=[latlng.lat,latlng.lng];
+        }
+        this.setState(this.state);
     }
     render(){
         return (
@@ -107,8 +130,13 @@ class MyNavBar extends React.Component{
                             </FormGroup>
 
                             <Label for="mapForm">Localisation</Label>
-                            <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}}>
+                            <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}} onclick={this.handleMapClick}>
                                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                
+                                {this.state.marker.map((e)=>(
+                                    <Marker position={e} icon={this.icon}></Marker>
+                                ))}
+                                
                             </Map>                         
                         </Form>
                         
