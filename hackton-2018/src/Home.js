@@ -8,6 +8,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
+import db from './config/Firestore'
 
 
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -37,31 +38,46 @@ class Home extends React.Component{
 
     this.toggle = this.toggle.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-
+    this.updateMarker = this.updateMarker.bind(this);
     this.state = {
       activeTab: '1',
       dropdownOpen: false,
-      modal: false
+      modal: false,
+      users: [],
+      markers:new Array()
     };
-  }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  }
+    this.activeTab='1';
+    this.dropdownOpen=false
 
-  toggleDropdown(){
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
+    this.updateState=this.updateState.bind(this);
 
-  render(){
-    const Icon= new L.Icon({
-        iconUrl: '/images/icon_profile.png',
+    setInterval(this.updateMarker,500);
+    setInterval(this.updateState,500);
+  }
+  updateMarker(){
+    //TODO get info from API
+
+    db.collection("cities").where("capital", "==", true)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+
+
+
+
+    let pos=[0,0];
+
+    let image_url=''
+    let icon=new L.Icon({
+        iconUrl: image_url,
         popupAnchor: null,
         shadowUrl: null,
 
@@ -70,6 +86,25 @@ class Home extends React.Component{
       }
 
     );
+    this.state.markers.push({icon:icon,pos:pos})
+  }
+
+  updateState(){
+    console.log('TOTO')
+    this.setState(this.state);
+  }
+  toggle(tab) {
+    console.log(tab);
+    if (this.state.activeTab !== tab) {
+
+      this.state.activeTab= tab
+    }
+  }
+  toggleDropdown(){
+    this.state.dropdownOpen=!this.state.dropdownOpen;
+  }
+
+  render(){
     return(
         <div>
           <MyNavBar />
@@ -89,8 +124,12 @@ class Home extends React.Component{
             <TabPane tabId="1">
               <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={mapCenter} icon={Icon}>
-                </Marker>
+                {
+                  this.state.markers.map((e)=>{
+                    <Marker position={e.pos} icon={e.icon}></Marker>
+                  })
+                }
+
 
               </Map>
             </TabPane>
