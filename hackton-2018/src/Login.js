@@ -45,7 +45,7 @@ class Login extends Component{
        <Container style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
 
         <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
-          <img src="/images/Logo_v2_2.png" style={{width:'400px',height:'400px',margin:'auto'}}/>
+          <img src="/images/Logo2.png" style={{width:'400px',height:'400px',margin:'auto'}}/>
           <h3 style={{width:'100px',height:'10px',margin:'auto', color:'white', fontWeight:'bold'}}>EurekArt</h3>
         <br/><br/>
           <h1 style={{fontSize:'15px'}}>CECI EST UNE DEMO</h1>
