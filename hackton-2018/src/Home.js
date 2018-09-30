@@ -325,9 +325,9 @@ class Home extends React.Component{
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
 
-               
+
                 {this.state.markers.map((element)=>(
-                    
+
                     <Marker key position={element.pos} icon={element.icon}>
                         <Popup key position={element.pos}>
                         {console.log(element.pos)}
@@ -418,13 +418,7 @@ class Home extends React.Component{
                           </Container>
                 </ListGroupItem>
               ))}
-
               </ListGroup>
-              <br/><br/><br/><br/><br/>
-              <br/><br/><br/><br/><br/>
-              <br/><br/><br/><br/><br/>
-              <br/><br/><br/><br/><br/>
-              <br/><br/><br/><br/><br/>
             </TabPane>
           </TabContent>
           <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
