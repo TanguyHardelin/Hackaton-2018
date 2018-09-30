@@ -403,8 +403,8 @@ class Home extends React.Component{
                             <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
                             }
                               </Row>
-                              <Row><h7><b>numero de telephone:</b> {element.xp}</h7></Row>
-                              <Row><h7><b>emails:</b> {element.xp}</h7></Row>
+                              <Row><h7><b>Céllulaire:</b> {element.userphone}</h7></Row>
+                              <Row><h7><b>Emails:</b> {element.useremail}</h7></Row>
                               <Row>
                               <Container>
                                 <Row>
@@ -414,6 +414,12 @@ class Home extends React.Component{
                                 <p style={{textJustify:'justify',textJustify:'inter-word'}}>{element.description}</p>
                                 </Row>
                               </Container>
+                          </Row>
+                          <Row>
+                            {/* <Col xs="5">
+                              <h4>Adresse courriel : {element.useremail}</h4>
+                              <h4>Cellulaire : {element.userphone}</h4>
+                            </Col> */}
                           </Row>
                           </Container>
                 </ListGroupItem>
