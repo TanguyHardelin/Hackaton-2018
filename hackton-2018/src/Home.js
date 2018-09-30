@@ -219,6 +219,8 @@ class Home extends React.Component{
       userAge:tab[i].userAge,
       userimage:tab[i].userimage,
       speciality:tab[i].speciality,
+      useremail:tab[i].useremail,
+      userphone:tab[i].userphone,
       category:tab[i].category,
       description:tab[i].description,
       remuneration:tab[i].remuneration
@@ -346,8 +348,8 @@ class Home extends React.Component{
                             <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
                             }
                               </Row>
-                              <Row><h7><b>numero de telephone:</b> {element.xp}</h7></Row>
-                              <Row><h7><b>emails:</b> {element.xp}</h7></Row>
+                              <Row><h7><b>Céllulaire:</b> {element.userphone}</h7></Row>
+                              <Row><h7><b>Emails:</b> {element.useremail}</h7></Row>
                               <Row>
                               <Container>
                                 <Row>
