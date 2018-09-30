@@ -69,27 +69,21 @@ class MyNavBar extends React.Component{
                 <Navbar color="light" light expand="md">
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} inNavbar>
                     <DropdownToggle nav>
-                        <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
+                        <img src="/images/Logo2.png" style={{width:'50px',height:'50px'}}/>
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem header>Mon profil</DropdownItem>
-                        <DropdownItem onClick={()=>{this.seeProfile()}}>
+                        <DropdownItem onClick={this.props.getUserInformation}>
                             <div style={{display:'flex',flexDirection:"row"}}>
                                 <img src="/images/icon_profile.png" style={{width:'25px',height:'25px'}}/>
-                                <p>Non Prénom</p>
-                            </div>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <div style={{display:'flex',flexDirection:"row",height:'15px'}}>
-                                <Badge color="danger" pill>0</Badge>
-                                <p> Messages</p>
+                                <p>Nom Prénom</p>
                             </div>
                         </DropdownItem>
                         <DropdownItem onClick={this.toggle}>Publier une annonce</DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem>Paramètres</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem color='danger' onClick={this.logout}>Déconnexion</DropdownItem>
+                        <DropdownItem onClick={this.logout} style={{backgroundColor:'#F00',color:'#FFF'}}>↦ Déconnexion</DropdownItem>
                     </DropdownMenu>
                     </Dropdown>
                     <Input placeholder="Ajouter un filtre" />

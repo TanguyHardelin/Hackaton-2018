@@ -40,7 +40,13 @@ class Login extends Component{
   render(){
     return(
       <div>
+        
        <Container style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+        
+        <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+          <img src="/images/Logo_v2_2.png" style={{width:'400px',height:'400px',margin:'auto'}}/>
+          <h3 style={{width:'100px',height:'10px',margin:'auto'}}>EurekArt</h3>
+        </div>
           <Form >
             <FormGroup>
             <Label for="exampleEmail" >Email</Label>

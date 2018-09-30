@@ -1,16 +1,18 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { Map, TileLayer, Marker,Popup ,DivOverlay } from 'react-leaflet';
+import { Map, TileLayer, Marker,Popup ,DivOverlay,Tooltip } from 'react-leaflet';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { TabContent, TabPane,  Card, CardTitle, CardText } from 'reactstrap';
+import { Modal, TabContent, TabPane,  Card, CardTitle, CardText } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
 import L from 'leaflet';
+import { BrowserRouter as Router, Route, Link , Redirect } from "react-router-dom";
 import db from './config/Firestore'
-import fire from './config/Fire'
-
+import fire from './config/Fire';
+import UserProfileModification from './UserProfileModification'
+import UserProfile from './UserProfile'
 
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 // import ResearchCollaborators from './ResearchCollaborators'
@@ -41,6 +43,7 @@ class Home extends React.Component{
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.updateMarker = this.updateMarker.bind(this);
 
+
     this.state = {
       userfirstname: '',
       userlastname: '',
@@ -49,22 +52,25 @@ class Home extends React.Component{
       activeTab: '1',
       dropdownOpen: false,
       modal: false,
-      markers:new Array()
+      users: [],
+      markers:new Array(),
+      userProfileModification:false
     };
 
     this.activeTab='1';
     this.dropdownOpen=false
 
+
+    this.toggleModalUser=this.toggleModalUser.bind(this);
     this.updateState=this.updateState.bind(this);
+    this.modifyUser=this.modifyUser.bind(this)
     this.updateMarker = this.updateMarker.bind(this);
 
     this.icon= new L.Icon({
-        iconUrl: '/images/poi.png',
-        iconSize: new L.Point(30, 30),
-        className: 'leaflet-div-icon'
-      }
-    );
-
+      iconUrl: '/images/poi.png',
+      iconSize: new L.Point(40, 40)
+    }
+  );
     // setInterval(this.updateMarker,500);
     this.updateMarker();
     this.getPosts();
@@ -143,25 +149,25 @@ class Home extends React.Component{
 
                 switch(doc.data().category) {
                     case "Peintre":
-                          image_url = "/images/paint.svg"
+                          image_url = "/images/paint_fonce.png"
                           break;
                     case "Musicien":
-                          image_url = "/images/note.svg"
+                          image_url = "/images/note_fonce.png"
                           break;
                     case "Acteur":
-                          image_url = "/images/actor.svg"
+                          image_url = "/images/actor_fonce.png"
                           break;
                     case "Photographe":
-                          image_url = "/images/note.svg"
+                          image_url = "/images/note_fonce.png"
                           break;
                     case "Chanteur":
-                          image_url = "/images/sing.svg"
+                          image_url = "/images/sing_fonce.png"
                           break;
                     case "Sculpteur":
-                          image_url = "/images/sculptor.svg"
+                          image_url = "/images/sculptor_fonce.png"
                           break;
                     case "Realisateur":
-                          image_url = "/images/clapboard.svg"
+                          image_url = "/images/clapboard_fonce.png"
                           break;
                     default:
                           break;
@@ -171,8 +177,8 @@ class Home extends React.Component{
                     iconUrl: image_url,
                     popupAnchor: null,
                     shadowUrl: null,
-                    iconSize: new L.Point(60, 60),
-                    className: 'leaflet-div-icon'
+                    iconSize: new L.Point(40, 40)
+                    //className: 'leaflet-div-icon'
                   }
                 );
 
@@ -196,14 +202,20 @@ class Home extends React.Component{
       this.state.activeTab= tab
     }
   }
+  toggleModalUser(){
+    this.state.modal=!this.state.modal;
+  }
   toggleDropdown(){
     this.state.dropdownOpen=!this.state.dropdownOpen;
+  }
+  modifyUser(){
+    this.state.userProfileModification=!this.state.userProfileModification;
   }
 
   render(){
     return(
         <div>
-          <MyNavBar updateMarker ={this.updateMarker}/>
+          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker}/>
           <Nav justified fill pills>
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
@@ -222,8 +234,31 @@ class Home extends React.Component{
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                 {this.state.markers.map((e)=>(
-                    <Marker position={ e.pos} icon={e.icon}></Marker>
+                    <Marker position={e.pos} icon={e.icon}>
+
+                    </Marker>
                 ))}
+                <Marker attribution='<p>TOTO</p>' position={[48.39820893678183, -71.15295410156251]} icon={this.icon}>4
+                <Tooltip permanent>
+                       <span>100$</span>
+                </Tooltip>
+                      <Popup>
+                      <Container fluid>
+                        <Row>
+                          <Col xs="4">
+                            <img src="/images/icon_profile.png" style={{width:'100px',height:'100px'}} />
+                          </Col>
+                          <Col xs="8">
+                            <h2>Name</h2>
+                            <h5>Spécialitée</h5>
+                            <h5>Localisation</h5>
+                            <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
+                          </Col>
+                        </Row>
+                      </Container>
+                      </Popup>
+
+                      </Marker>
                     {/* <Marker position={ [48.39820893678183, -71.15295410156251]} icon={this.icon}></Marker> */}
 
               </Map>
@@ -250,6 +285,9 @@ class Home extends React.Component{
               </ListGroup>
             </TabPane>
           </TabContent>
+          <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
+            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser}/>:<UserProfileModification />}
+          </Modal>
 
         </div>
     )

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link , Redirect } from "react-router-do
 import Login from './Login';
 import Home from './Home';
 import App from './App';
-import UserProfile from './UserProfile'
+import UserProfile from './UserProfileModification'
 import CustomHistory from './CustomHistory';
 import SignUpModal from './SignUpModal';
 
