@@ -246,7 +246,7 @@ class Home extends React.Component{
   render(){
     return(
         <div style={{backgroundColor:"#2c3142"}}>
-          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker}/>
+          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker} passedVal={this.state}/>
           <Nav justified fill pills>
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>

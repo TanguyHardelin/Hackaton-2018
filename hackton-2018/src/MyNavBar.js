@@ -76,7 +76,7 @@ class MyNavBar extends React.Component{
                         <DropdownItem onClick={this.props.getUserInformation}>
                             <div style={{display:'flex',flexDirection:"row"}}>
                                 <img src="/images/icon_profile.png" style={{width:'25px',height:'25px'}}/>
-                                <p>Nom Prénom</p>
+                                <p> {this.props.passedVal.userfirstname} {this.props.passedVal.userlastname}</p>
                             </div>
                         </DropdownItem>
                         <DropdownItem onClick={this.toggle}>Publier une annonce</DropdownItem>

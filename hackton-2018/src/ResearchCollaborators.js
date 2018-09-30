@@ -129,6 +129,7 @@ class ResearchCollaborators extends React.Component {
             let style = document.querySelector('#styleInput').value;
             let descriptif = document.querySelector('#descriptifInput').value;
             let remuneration = document.querySelector('#remunerationInput').value ||'0';
+            let xp = document.querySelector('#xpInput').value;;
               // doc.data() is never undefined for query doc snapshots
               console.log(doc.id, " => ", doc.data());
               docRef = doc.data();
@@ -156,7 +157,8 @@ class ResearchCollaborators extends React.Component {
                   speciality: speciality,
                   style: style,
                   descriptif: descriptif,
-                  remuneration: remuneration
+                  remuneration: remuneration,
+                  xp: xp
               })
               .then(function(docRef) {
                   console.log("Document written with ID: ", docRef.id);
@@ -195,7 +197,8 @@ class ResearchCollaborators extends React.Component {
             <Form>
 
                 <FormGroup>
-                    <Label for="exampleSelect">Catégorie recherchée</Label>
+                  <br/>
+                    <Label for="exampleSelect">Profil recherché</Label>
                     <Input type="select" name="select" id="categoryInput">
                         <option>Musicien</option>
                         <option>Chanteur</option>
@@ -204,13 +207,11 @@ class ResearchCollaborators extends React.Component {
                         <option>Audiovisuel</option>
                         <option>Comédien</option>
                     </Input>
-                </FormGroup>
-
-                <FormGroup>
-                    <Input type="text" id="specialityInput" placeholder="Specialité" />
-                </FormGroup>
-
-                <FormGroup>
+                    <FormGroup>
+                      <br/>
+                      <Label for="exampleSelect">Niveau d'expérience recherché</Label>
+                        <Input type="text" id="xpInput" placeholder="Ex : tout niveau, intermédiaire, expert..." />
+                    </FormGroup>
                     <Input type="text" id="specialityInput" placeholder="Specialité" />
                 </FormGroup>
 
@@ -220,6 +221,11 @@ class ResearchCollaborators extends React.Component {
 
                 <FormGroup>
                     <Input type="text" id="descriptifInput" placeholder="Texte descriptif de votre annonce" />
+                </FormGroup>
+
+                <FormGroup>
+                    <Label>Rémunération</Label>
+                    <Input type="number" id="remunerationInput"/>
                 </FormGroup>
 
                 <Label for="mapForm">Selectionnez une position sur la carte :</Label>
