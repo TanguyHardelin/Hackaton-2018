@@ -35,7 +35,9 @@ class UserProfile extends React.Component{
               <Col xs="2">
                   <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
               </Col>
+              <Col xs="8">
                   <Button outline block color="primary" type="text">Profil utilisateur </Button>
+              </Col>
               </Row>
               <br/>
               <Col>
