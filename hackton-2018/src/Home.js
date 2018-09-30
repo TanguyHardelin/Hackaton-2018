@@ -57,7 +57,8 @@ class Home extends React.Component{
       userProfileModification:false,
       userinformation:{},
       markersInfos:new Array(),
-      height:'0px'
+      height:'0px',
+      filters:new Array()
     };
 
     this.activeTab='1';
@@ -68,6 +69,7 @@ class Home extends React.Component{
     this.updateState=this.updateState.bind(this);
     this.modifyUser=this.modifyUser.bind(this)
     this.updateMarker = this.updateMarker.bind(this);
+    this.setFilter=this.setFilter.bind(this)
 
     
     this.icon= new L.Icon({
@@ -235,11 +237,53 @@ class Home extends React.Component{
     this.state.userProfileModification=!this.state.userProfileModification;
     this.updateState()
   }
+  checkForValue(json, tab) {
+    
+    for(let i=0;i<tab.length;i++){
+      let value=tab[i]
+        for (let key in json) {
+            if (typeof (json[key]) === "object") {
+                return this.checkForValue(json[key], value);
+            } else if (json[key] === value) {
+              console.log(tab)
+                console.log(json)
+                
+                return true;
+                
+            }
+        }
+    }
+    return false;
+}
+  setFilter(filters){
+    
+    this.state.filters=filters;
+    for(let i=0;i<this.state.markers.length;i++){
+      let b=true
+      if(this.state.filters.length>0){
+        for(let j=0;j<this.state.filters.length;j++){
+          if(this.state.markers[i].category==this.state.filters[j]){
+            console.log(this.state.filters[j])
+            b=false
+          }
+        }
+        if(!b){
+          this.state.markers=this.state.markers.splice(i,1)
+          console.log(this.state.markers)
+        }
+        
+      }
+
+    }
+    console.log(this.state.markers)
+    //console.log(this.state.filters)
+    this.setState(this.state)
+  }
 
   render(){
     return(
         <div>
-          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.getPosts}/>
+          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.getPosts} setFilter={this.setFilter}/>
           <Nav id='titiBar' justified fill pills >
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
@@ -258,8 +302,9 @@ class Home extends React.Component{
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                
-               
+                
                 {this.state.markers.map((element)=>(
+                      
                     <Marker key position={element.pos} icon={element.icon}>
                         <Popup key position={element.pos}>
                         {console.log(element.pos)}
@@ -274,12 +319,12 @@ class Home extends React.Component{
                                 
                               </Col>
                               </Row>
-                              <Row><h7><b>Profile recherché:</b> {element.category}</h7></Row>
+                              <Row><h7><b>Profil recherché:</b> {element.category}</h7></Row>
                               <Row>
-                          {element.remuneration!='0'?
-                          <h7><b>Rémunération: </b><Badge color="warning">{element.remuneration} $</Badge></h7>:
-                          <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
-                          }
+                            {element.remuneration!='0'?
+                            <h7><b>Rémunération: </b><Badge color="warning">{element.remuneration} $</Badge></h7>:
+                            <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
+                            }
                               </Row>
                               <Row>
                           <div><h7><b>Description de l'annonce:</b> </h7><p>{element.description}</p></div>
@@ -288,6 +333,7 @@ class Home extends React.Component{
                           
                         </Popup>
                     </Marker>
+
                 ))}
                
               </Map>

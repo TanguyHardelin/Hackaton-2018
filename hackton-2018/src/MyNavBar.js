@@ -34,8 +34,11 @@ class MyNavBar extends React.Component{
         this.state = {
             modal: false,
             dropdownOpen: false,
-            marker:new Array()
+            marker:new Array(),
+            filter:new Array()
         };
+        this.removeElementFromSearch=this.removeElementFromSearch.bind(this)
+        this.launchResearch=this.launchResearch.bind(this)
     }
     passUpdateMarker(){
       this.props.updateMarker();
@@ -62,6 +65,28 @@ class MyNavBar extends React.Component{
     logout () {
       fire.auth().signOut();
     }
+    launchResearch(){
+        let value=document.querySelector('#rechercheInput').value;
+        let all_filter=value.split(' ')
+        for(let i=0;i<all_filter.length;i++){
+            this.state.filter.push(all_filter[i])
+        }
+        this.props.setFilter(this.state.filter)
+        this.setState(this.state)
+        
+    }
+    removeElementFromSearch(name){
+        console.log("OK")
+        let index=this.state.filter.indexOf(name)
+        
+        if(index>-1){
+            this.state.filter.splice(index,1)
+            this.props.setFilter(this.state.filter)
+            this.setState(this.state)
+        }
+        
+
+    }
 
     render(){
         return (
@@ -86,7 +111,12 @@ class MyNavBar extends React.Component{
                         <DropdownItem onClick={this.logout} style={{backgroundColor:'#F00',color:'#FFF'}}>↦ Déconnexion</DropdownItem>
                     </DropdownMenu>
                     </Dropdown>
-                    <Input placeholder="Ajouter un filtre" />
+                    { this.state.filter.map((e)=>(
+                        <Button outline color="secondary" onClick={()=>this.removeElementFromSearch(e)}>{e} x</Button>
+                    ))}
+                        
+                    <Input id='rechercheInput' placeholder="Ajouter un filtre" />{' '}
+                    <Button color="link" onClick={this.launchResearch}>🔎</Button>   
                 </Navbar>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
