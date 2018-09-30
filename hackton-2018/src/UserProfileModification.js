@@ -21,46 +21,63 @@ import {
 
 class UserProfileModification extends React.Component{
 
+  constructor(props) {
+      super(props);
+      console.log(this.props.passedVal);
+    }
+
   render(){
     return(
         <div>
-            <Container fluid>
+            <Container fluid style={{backgroundColor:'#464c5e', color:'white'}}>
                 <Row>
+                  <br/><br/>
                     <Col xs="2">
-                        <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
+                        <br/><img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
                     </Col>
                     <Col xs="10">
-                        <h1>NOM prénom</h1>
+                        <br/><h1 style={{fontSize:'25px', color:'White'}}>Modifications du profil</h1>
                     </Col>
                 </Row>
 
                 <Form>
                     <FormGroup>
-                        <Label for="exampleEmail">Nom Prénom</Label>
-                        <Input type="file"id="nameInput" placeholder="Nom prénom" />
+                      <Row>
+                        <Col xs="5">
+                        <Label for="exampleEmail">Modifier image de profil :</Label>
+                        </Col>
+                        <Col xs="5">
+                          <Input type="file"id="nameInput" placeholder="" />
+                        </Col>
+                        </Row>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleEmail">Nom Prénom</Label>
-                        <Input type="text"id="nameInput" placeholder="Nom prénom" />
+                        <Label for="exampleEmail">Nom </Label>
+                        <Input type="text"id="nameInput" placeholder={this.props.passedVal.userlastname} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="exampleEmail">Nom</Label>
+                        <Input type="text"id="nameInput" placeholder={this.props.passedVal.userfirstname} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleEmail">Age</Label>
-                        <Input type="text"id="nameInput" placeholder="20 ans" />
+                        <Input type="text"id="nameInput" placeholder={this.props.passedVal.userage} />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleEmail">Spécialitée</Label>
-                        <Input type="text"id="nameInput" placeholder="Musiciens" />
+                        <Label for="exampleEmail">Spécialité(s)</Label>
+                        <Input type="text"id="nameInput" placeholder="Musicien" />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleEmail">Proféssion</Label>
+                        <Label for="exampleEmail">Situation professionnelle</Label>
                         <Input type="text"id="nameInput" placeholder="Guitariste" />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleEmail">Description</Label>
+                        <Label for="exampleEmail">Description utilisateur</Label>
                         <Input type="textarea" id="nameInput" placeholder="Blablala" />
                     </FormGroup>
                 </Form>
                 <Button color='success' block>OK</Button>
+                <br/>
             </Container>
 
         </div>

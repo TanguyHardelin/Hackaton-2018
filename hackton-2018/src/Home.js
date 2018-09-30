@@ -323,7 +323,7 @@ class Home extends React.Component{
             </TabPane>
           </TabContent>
           <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
-            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state}/>:<UserProfileModification />}
+            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state}/>:<UserProfileModification  passedVal={this.state}/>}
             {/* {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state.userfirstname}/>:<UserProfileModification />} */}
           </Modal>
         <FooterPage/>
