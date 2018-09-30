@@ -66,7 +66,7 @@ class MyNavBar extends React.Component{
     render(){
         return (
             <div>
-                <Navbar color="light" light expand="md">
+                <Navbar id="totobar" color="light" light expand="md">
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} inNavbar>
                     <DropdownToggle nav>
                         <img src="/images/Logo2.png" style={{width:'50px',height:'50px'}}/>

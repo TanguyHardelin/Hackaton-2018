@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Map, TileLayer, Marker,Popup ,DivOverlay,Tooltip } from 'react-leaflet';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Modal, TabContent, TabPane,  Card, CardTitle, CardText } from 'reactstrap';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup, ListGroupItem , Badge } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Media } from 'reactstrap';
 import classnames from 'classnames';
@@ -41,7 +41,7 @@ class Home extends React.Component{
 
     this.toggle = this.toggle.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.updateMarker = this.updateMarker.bind(this);
+    this.getPosts = this.getPosts.bind(this);
 
 
     this.state = {
@@ -54,7 +54,10 @@ class Home extends React.Component{
       modal: false,
       users: [],
       markers:new Array(),
-      userProfileModification:false
+      userProfileModification:false,
+      userinformation:{},
+      markersInfos:new Array(),
+      height:'0px'
     };
 
     this.activeTab='1';
@@ -66,16 +69,23 @@ class Home extends React.Component{
     this.modifyUser=this.modifyUser.bind(this)
     this.updateMarker = this.updateMarker.bind(this);
 
+    
     this.icon= new L.Icon({
       iconUrl: '/images/poi.png',
       iconSize: new L.Point(40, 40)
     }
+   
   );
     // setInterval(this.updateMarker,500);
-    this.updateMarker();
-    this.getPosts();
+    
+    this.getPosts().then((data)=>{
+      this.updateMarker(data);
+      this.updateState()
+    })
 
-    setInterval(this.updateState,500);
+    //setInterval(this.updateState,5000);
+  }
+  componentDidMount(){
   }
 
   getCurrentUserInfos() {
@@ -91,11 +101,11 @@ class Home extends React.Component{
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             docRef = doc.data();
-            self.userfirstname = docRef.firstName;
-            self.userlastname = docRef.lastName;
-            self.userage = docRef.age;
-            self.userimageurl = docRef.imageurl || ' ';
-            console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
+            self.state.userinformation.userfirstname = docRef.firstName;
+            self.state.userinformation.userlastname = docRef.lastName;
+            self.state.userinformation.userage = docRef.age;
+            self.state.userinformation.userimageurl = docRef.imageurl || ' ';
+            //console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
         });
     })
     .catch(function(error) {
@@ -105,7 +115,8 @@ class Home extends React.Component{
 
   getPosts() {
     let self=this;
-    var postList = [];
+    return new Promise((resolve,err)=>{
+      var postList = [];
     db.collection("Posts").get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -119,79 +130,88 @@ class Home extends React.Component{
               description : doc.data().descriptif,
               latitude: doc.data().latitude,
               longitude: doc.data().longitude,
+              category: doc.data().category,
               remuneration: doc.data().remuneration,
             }
 
             postList.push(userTemp)
         });
+        self.state.markersInfos=postList;
           self.getCurrentUserInfos();
+          resolve(postList);
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
     console.log(postList)
     return postList;
+    })
+    
   }
 
-  updateMarker() {
+  updateMarker(data) {
     //TODO get info from API
     let self=this;
-    db.collection("Posts").get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
+    
+    let tab=self.state.markersInfos
+    for(let i=0;i<tab.length;i++){
+      let pos=[tab[i].latitude, tab[i].longitude];
 
-            // console.log(doc.id, " => ", doc.data());
-            //  console.log( "category : " + doc.data().category);
-                let pos=[doc.data().latitude, doc.data().longitude];
-                console.log("pos : "+ pos);
-              //  pos = [48.39820893678183, -71.15295410156251]
-                let image_url='/images/poi.png'
+      let image_url='/images/poi.png'
+      let indice='fonce';
+      if(parseInt(tab[i].remuneration)>0)
+        indice='orange'
+      switch(tab[i].category) {
+          case "Peintre":
+                image_url = "/images/paint_"+indice+".png"
+                break;
+          case "Musicien":
+                image_url = "/images/note_"+indice+".png"
+                break;
+          case "Acteur":
+                image_url = "/images/actor_"+indice+".png"
+                break;
+          case "Photographe":
+                image_url = "/images/note_"+indice+".png"
+                break;
+          case "Chanteur":
+                image_url = "/images/sing_"+indice+".png"
+                break;
+          case "Sculpteur":
+                image_url = "/images/sculptor_"+indice+".png"
+                break;
+          case "Realisateur":
+                image_url = "/images/clapboard_"+indice+".png"
+                break;
+          default:
+                break;
+        }
 
-                switch(doc.data().category) {
-                    case "Peintre":
-                          image_url = "/images/paint_fonce.png"
-                          break;
-                    case "Musicien":
-                          image_url = "/images/note_fonce.png"
-                          break;
-                    case "Acteur":
-                          image_url = "/images/actor_fonce.png"
-                          break;
-                    case "Photographe":
-                          image_url = "/images/note_fonce.png"
-                          break;
-                    case "Chanteur":
-                          image_url = "/images/sing_fonce.png"
-                          break;
-                    case "Sculpteur":
-                          image_url = "/images/sculptor_fonce.png"
-                          break;
-                    case "Realisateur":
-                          image_url = "/images/clapboard_fonce.png"
-                          break;
-                    default:
-                          break;
-                }
+        let ic=new L.Icon({
+          iconUrl: image_url,
+          iconSize: new L.Point(40, 40)
+          
+        }
+      );
 
-                let icon=new L.Icon({
-                    iconUrl: image_url,
-                    popupAnchor: null,
-                    shadowUrl: null,
-                    iconSize: new L.Point(40, 40)
-                    //className: 'leaflet-div-icon'
-                  }
-                );
-
-                self.state.markers.push({icon:icon,pos:pos})
-        });
+      //this.icon.push(ic);
+      self.state.markers.push({icon:ic,pos:pos,userfirstName:tab[i].userfirstName,
+      userlastName:tab[i].userlastName,
+      image_url:image_url,
+      id:i,
+      userimage:tab[i].userimage,
+      speciality:tab[i].speciality,
+      category:tab[i].category,
+      description:tab[i].description,
+      remuneration:tab[i].remuneration
     })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
+  }
+        
+    
   }
 
   updateState(){
-    console.log('UPDATE STATE')
+    console.log(this.state)
     this.setState(this.state);
   }
 
@@ -201,22 +221,26 @@ class Home extends React.Component{
 
       this.state.activeTab= tab
     }
+    this.updateState()
   }
   toggleModalUser(){
     this.state.modal=!this.state.modal;
+    this.updateState()
   }
   toggleDropdown(){
     this.state.dropdownOpen=!this.state.dropdownOpen;
+    this.updateState()
   }
   modifyUser(){
     this.state.userProfileModification=!this.state.userProfileModification;
+    this.updateState()
   }
 
   render(){
     return(
         <div>
-          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker}/>
-          <Nav justified fill pills>
+          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.getPosts}/>
+          <Nav id='titiBar' justified fill pills >
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
                 Carte
@@ -233,54 +257,60 @@ class Home extends React.Component{
               <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-                {this.state.markers.map((e)=>(
-                    <Marker position={e.pos} icon={e.icon}>
-
+               
+               
+                {this.state.markers.map((element)=>(
+                    <Marker key position={element.pos} icon={element.icon}>
+                        <Popup key position={element.pos}>
+                        {console.log(element.pos)}
+                          <Container fluid>
+                            <Row>
+                              <Col xs="2">
+                                <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
+                              </Col>
+                              <Col xs="10">
+                                {console.log(element)}
+                                <h4>{element.userfirstName+' '+element.userlastName}</h4>
+                                
+                              </Col>
+                              </Row>
+                              <Row><h7><b>Profile recherché:</b> {element.category}</h7></Row>
+                              <Row>
+                          {element.remuneration!='0'?
+                          <h7><b>Rémunération: </b><Badge color="warning">{element.remuneration} $</Badge></h7>:
+                          <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
+                          }
+                              </Row>
+                              <Row>
+                          <div><h7><b>Description de l'annonce:</b> </h7><p>{element.description}</p></div>
+                          </Row>
+                          </Container>
+                          
+                        </Popup>
                     </Marker>
                 ))}
-                <Marker attribution='<p>TOTO</p>' position={[48.39820893678183, -71.15295410156251]} icon={this.icon}>4
-                <Tooltip permanent>
-                       <span>100$</span>
-                </Tooltip>
-                      <Popup>
-                      <Container fluid>
-                        <Row>
-                          <Col xs="4">
-                            <img src="/images/icon_profile.png" style={{width:'100px',height:'100px'}} />
-                          </Col>
-                          <Col xs="8">
-                            <h2>Name</h2>
-                            <h5>Spécialitée</h5>
-                            <h5>Localisation</h5>
-                            <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
-                          </Col>
-                        </Row>
-                      </Container>
-                      </Popup>
-
-                      </Marker>
-                    {/* <Marker position={ [48.39820893678183, -71.15295410156251]} icon={this.icon}></Marker> */}
-
+               
               </Map>
             </TabPane>
             <TabPane tabId="2">
               <ListGroup>
-                <ListGroupItem>
+              {this.state.markers.map((element)=>(
+                <ListGroupItem key>
                   <Container fluid>
                     <Row>
                       <Col xs="2">
                         <img src="/images/icon_profile.png" />
                       </Col>
                       <Col xs="10">
-                        <h2>Name</h2>
-                        <h5>Spécialitée</h5>
-                        <h5>Localisation</h5>
-                        <p style={{'textAlign':'justify',textJustify:'interWord'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada commodo sagittis. Praesent sed mattis odio. Phasellus luctus porta hendrerit. Sed posuere dui ut justo dapibus, ut congue leo dignissim. Aliquam eget augue quam. Mauris eros ipsum, dapibus non ornare ut, iaculis at ex. Ut ac tellus eget massa cursus.</p>
+                        {console.log(element)}
+                        <h2>{element.userfirstName+' '+element.userlastName}</h2>
+                        <h5>{element.category}</h5>
+                        <p style={{'textAlign':'justify',textJustify:'interWord'}}>{element.description}</p>
                       </Col>
                     </Row>
                   </Container>
                 </ListGroupItem>
-
+              ))}
 
               </ListGroup>
             </TabPane>
