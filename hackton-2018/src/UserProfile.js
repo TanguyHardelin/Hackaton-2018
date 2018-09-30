@@ -28,28 +28,31 @@ class UserProfile extends React.Component{
 
   render(){
     return(
-        <div>
-            <Container fluid>
+        <div style={{backgroundColor:'#464c5e'}}>
+            <Container fluid >
               <br/>
+              <Row>
               <Col xs="2">
                   <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
               </Col>
+                  <Button outline block color="primary" type="text">Profil utilisateur </Button>
+              </Row>
               <br/>
               <Col>
                   <FormGroup>
-                      <Button outline block color="secondary" type="text" id="userfirstname">{this.props.passedVal.userfirstname} </Button>
+                      <Button outline block color="primary" type="text" id="userfirstname">{this.props.passedVal.userfirstname} </Button>
                   </FormGroup>
 
                   <FormGroup>
-                      <Button outline block color="secondary" type="text" id="userlastname"> {this.props.passedVal.userlastname} </Button>
+                      <Button outline block color="primary" type="text" id="userlastname"> {this.props.passedVal.userlastname} </Button>
                   </FormGroup>
 
                   <FormGroup>
-                        <Button outline block color="secondary" type="number" id="userage" >{this.props.passedVal.userage} </Button>
+                        <Button outline block color="primary" type="number" id="userage" >{this.props.passedVal.userage} </Button>
                   </FormGroup>
 
                   <FormGroup>
-                        <Button outline block color="secondary" type="email" id="nameInput">{this.props.passedVal.useremail} </Button>
+                        <Button outline block color="primary" type="email" id="nameInput">{this.props.passedVal.useremail} </Button>
                   </FormGroup>
 
                 </Col>

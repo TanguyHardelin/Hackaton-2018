@@ -8,6 +8,7 @@ import fire from './config/Fire';
 import Home from './Home'
 import App from './App'
 import SignUpModal from './SignUpModal'
+import FooterPage from './Footerpage'
 
 class Login extends Component{
 
@@ -39,13 +40,15 @@ class Login extends Component{
   }
   render(){
     return(
-      <div>
-        
+      <div style={{backgroundColor:"#393e51" }}>
+      <Container style={{color:'white', fontWeight:'bold'}}>
        <Container style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
-        
+
         <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
           <img src="/images/Logo_v2_2.png" style={{width:'400px',height:'400px',margin:'auto'}}/>
-          <h3 style={{width:'100px',height:'10px',margin:'auto'}}>EurekArt</h3>
+          <h3 style={{width:'100px',height:'10px',margin:'auto', color:'white', fontWeight:'bold'}}>EurekArt</h3>
+        <br/><br/>
+          <h1 style={{fontSize:'15px'}}>CECI EST UNE DEMO</h1>
         </div>
           <Form >
             <FormGroup>
@@ -72,10 +75,13 @@ class Login extends Component{
             </Col>
           </Row>
         </Container>
+      </Container>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
             <SignUpModal />
         </Modal>
+        <br/><br/><br/><br/>
+        <FooterPage />
       </div>
     )
   }

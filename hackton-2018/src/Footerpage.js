@@ -10,33 +10,19 @@ class FooterPage extends React.Component {
             <Footer color="#2c3142" className="page-footer font-small pt-4 mt-4">
                 <Container fluid className="text-center text-md-left">
                     <Row>
-                    <Col md="6">
+                    <Col md="8" >
                         <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">A propos</h5>
-                        <p>Ce site web a été réalisé lors d'un hackathon à Chicoutimi et est voué à améliorer le
-                          partage de la culture au Saguenay Lac-Saint-Jean par la mise en relation des artistes.</p>
+                        <p style={{textAlign: 'justify'}}>Ce site web a été réalisé lors d'un hackathon à Chicoutimi et est voué à améliorer le
+                          partage de la culture au Saguenay Lac-Saint-Jean par la mise en relation des artistes.
+                          Les membres du groupe Mathieu, Maxence, Simon et Tanguy sommes ouverts à toute suggestion
+                          d'amélioration de la plateforme. Vous pouvez nous contacter par mail ou par
+                          message sur les réseaux sociaux listés çi-dessous.</p>
                     </Col>
                     <hr className="clearfix w-100 d-md-none"/>
-                    <Col md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">Links</h5>
+                    <Col md="2" style={{textAlign: 'left'}}>
+                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">Nous contacter</h5>
                         <ul className="list-unstyled">
-                            <li><a href="#!">Link 1</a></li>
-                            <li><a href="#!">Link 2</a></li>
-                        </ul>
-                    </Col>
-                    <hr className="clearfix w-100 d-md-none"/>
-                    <Col md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">Liens</h5>
-                        <ul className="list-unstyled">
-                            <li><a href="#!">Link 1</a></li>
-                            <li><a href="#!">Link 2</a></li>
-                        </ul>
-                    </Col>
-                    <hr className="clearfix w-100 d-md-none"/>
-                    <Col md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">Liens</h5>
-                        <ul className="list-unstyled">
-                            <li><a href="#!">Link 1</a></li>
-                            <li><a href="#!">Link 2</a></li>
+                            <li><a href="#!"><a style={{fontWeight: 'bold'}} href="eurekart@suggestions.com">eurekart@suggestions.com</a></a></li>
                         </ul>
                     </Col>
                     </Row>
