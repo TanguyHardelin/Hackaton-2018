@@ -199,6 +199,9 @@ class Home extends React.Component{
           case "Realisateur":
                 image_url = "/images/clapboard_"+indice+".png"
                 break;
+          case "Audiovisuel":
+                image_url = "/images/clapboard_"+indice+".png"
+                break;
           default:
                 break;
         }
