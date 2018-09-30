@@ -41,9 +41,9 @@ class MyNavBar extends React.Component{
         this.launchResearch=this.launchResearch.bind(this)
     }
     passUpdateMarker(){
+      this.props.updateMarker();
       this.state.modal=false;
       this.setState(this.state)
-      this.props.updateMarker();
     }
 
     seeProfile(){
