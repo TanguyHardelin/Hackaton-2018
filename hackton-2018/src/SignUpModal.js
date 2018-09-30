@@ -23,6 +23,7 @@ class SignUpModal extends React.Component {
       phone:'',
       email:'',
       password:'',
+      image: null,
       modal: false
     };
   }
@@ -46,7 +47,7 @@ class SignUpModal extends React.Component {
       let phone = document.querySelector('#phoneNumberInput').value;
       let email = document.querySelector('#emailInputSignUp').value;
       let password = document.querySelector('#passwordInputSignUp').value;
-
+      
       fire.auth().createUserWithEmailAndPassword(email, password).then(
         // Add a new document in collection "utilisateurs"
         // Add a new document with a generated id.

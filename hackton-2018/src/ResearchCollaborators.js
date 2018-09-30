@@ -13,14 +13,18 @@ class ResearchCollaborators extends React.Component {
 
   constructor(props) {
     super(props);
-  
+
     this.post = this.post.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
 
     this.state = {
       idUser: '',
+      userfirstname: '',
+      userlastname: '',
+      userage: '',
+      userimageurl: '',
       location: '',
-      searchRequest: '',
+      searchrequest: '',
       marker:new Array(),
       latitude: '',
       longitude: '',
@@ -36,30 +40,67 @@ class ResearchCollaborators extends React.Component {
   }
 
   post(e) {
+
       e.preventDefault();
-      let category = document.querySelector('#categoryInput').value;
-      let speciality = document.querySelector('#specialityInput').value;
-      let style = document.querySelector('#styleInput').value;
-      let descriptif = document.querySelector('#descriptifInput').value;
+      let self=this;
+
 
       var user = fire.auth().currentUser;
-      let uid = user.uid;
+      //console.log(user.uid);
+      var docRef = db.collection("Users").where("email", "==", user.email);
 
-        db.collection("Posts").add({
-            uid: uid,
-            category: category,
-            speciality: speciality,
-            style: style,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            descriptif: descriptif
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+      db.collection("Users").where("email", "==",  user.email)
+      .get()
+      .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            let category = document.querySelector('#categoryInput').value;
+            let speciality = document.querySelector('#specialityInput').value;
+            let style = document.querySelector('#styleInput').value;
+            let descriptif = document.querySelector('#descriptifInput').value;
+            let remuneration = document.querySelector('#remunerationInput').value ||'0';
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              docRef = doc.data();
+              console.log(docRef);
+              self.userfirstname = docRef.firstName;
+              self.userlastname = docRef.lastName;
+              self.userage = docRef.age;
+              self.userimageurl = docRef.imageurl || ' ';
+              // this.userAge = docRef.age;
+              // this.userimageurl = docRef.imageurl;
+              // console.log("USERFIRSTNAME : "+this.userfirstname);
+              console.log( self.userfirstname +" "+   self.userlastname);
+
+              //self.setState(self.state);
+
+              db.collection("Posts").add({
+                  // uid: user.uid,
+                  userFirstName: self.userfirstname,
+                  userLastName: self.userlastname,
+                  userAge: self.userage,
+                  userimageurl: self.userimageurl,
+                  latitude: self.latitude,
+                  longitude: self.longitude,
+                  category: category,
+                  speciality: speciality,
+                  style: style,
+                  descriptif: descriptif,
+                  remuneration: remuneration
+              })
+              .then(function(docRef) {
+                  console.log("Document written with ID: ", docRef.id);
+              })
+              .catch(function(error) {
+                  console.error("Error adding document: ", error);
+              });
+          });
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
+
+
+
 
       this.props.updateMarker();
     }
@@ -108,6 +149,11 @@ class ResearchCollaborators extends React.Component {
                 <FormGroup>
                     <Label for="styleInput">Description</Label>
                     <Input type="text" id="descriptifInput" placeholder="Texte descriptif de votre annonce" />
+                </FormGroup>
+
+                <FormGroup>
+                    <Label for="styleInput">Rémunération</Label>
+                    <Input type="number" id="remunerationInput" placeholder="0" />
                 </FormGroup>
 
                 <Label for="mapForm">Localisation</Label>

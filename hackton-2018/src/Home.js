@@ -41,15 +41,11 @@ class Home extends React.Component{
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.updateMarker = this.updateMarker.bind(this);
 
-    this.user = {
-          name: '',
-          imageurl: '',
-          speciality: '',
-          age: '',
-          description: ''
-    }
-
     this.state = {
+      userfirstname: '',
+      userlastname: '',
+      userage: '',
+      userimageurl: '',
       activeTab: '1',
       dropdownOpen: false,
       modal: false,
@@ -71,20 +67,64 @@ class Home extends React.Component{
 
     // setInterval(this.updateMarker,500);
     this.updateMarker();
+    this.getPosts();
 
     setInterval(this.updateState,500);
   }
 
-  getInfos() {
+  getCurrentUserInfos() {
     let self=this;
-    var user = fire.auth().currentUser;
-    var userInfos = [
-      "firstName": user.firstname,
-      "lastName": user.lastname,
-      "vocations" : user.vocations
+    var user = JSON.parse(JSON.stringify(fire.auth())).currentUser;
+    console.log( fire.auth());
+    console.log( fire.auth().currentUser);
+    console.log( "USER : " + user);
+    var docRef = db.collection("Users").where("email", "==", user.email);
 
-    ];
-    return userInfos;
+    db.collection("Users").where("email", "==",  user.email)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            docRef = doc.data();
+            self.userfirstname = docRef.firstName;
+            self.userlastname = docRef.lastName;
+            self.userage = docRef.age;
+            self.userimageurl = docRef.imageurl || ' ';
+            console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+  }
+
+  getPosts() {
+    let self=this;
+    var postList = [];
+    db.collection("Posts").get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+
+            var userTemp = {
+              userfirstName: doc.data().userFirstName,
+              userlastName: doc.data().userLastName,
+              userAge: doc.data().userAge,
+              userimage: doc.data().userimageurl,
+              speciality: doc.data().speciality,
+              description : doc.data().descriptif,
+              latitude: doc.data().latitude,
+              longitude: doc.data().longitude,
+              remuneration: doc.data().remuneration,
+            }
+
+            postList.push(userTemp)
+        });
+          self.getCurrentUserInfos();
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    console.log(postList)
+    return postList;
   }
 
   updateMarker() {
