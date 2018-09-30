@@ -171,7 +171,7 @@ class ResearchCollaborators extends React.Component {
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-
+      
       this.props.updateMarker();
     }
 
@@ -195,7 +195,6 @@ class ResearchCollaborators extends React.Component {
 
         <Container fluid>
             <Form>
-
                 <FormGroup>
                   <br/>
                     <Label for="exampleSelect">Profil recherché</Label>
@@ -237,7 +236,6 @@ class ResearchCollaborators extends React.Component {
                     ))}
                 </Map>
             </Form>
-
         </Container>
         <p>    </p>
         <Button color='success' block onClick={this.post}>Publier une annonce</Button>

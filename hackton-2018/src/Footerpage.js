@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row, Footer } from 'mdbreact';
 import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
+import './bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 class FooterPage extends React.Component {
