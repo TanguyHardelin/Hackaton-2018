@@ -20,29 +20,49 @@ import {
   import MyNavBar from './MyNavBar';
 
 class UserProfile extends React.Component{
- 
-  
-  render(){
-    
-    return(
-        <div>
-            <Container fluid>
-                <Row>
-                    <Col xs="2">
-                        <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
-                    </Col>
-                    <Col xs="10">
-                        <h1>NOM prénom</h1>
-                    </Col>
-                </Row>
 
-                <h5>20 ans</h5>
-                <h5>Musicien: guitariste</h5>
-                <p>Lorem Ipsum</p>
-                
-                <Button color='success' block onClick={this.props.cb}>Modifier</Button>
+  constructor(props) {
+      super(props);
+      console.log(this.props.passedVal);
+    }
+
+  render(){
+    return(
+        <div style={{backgroundColor:'#464c5e'}}>
+            <Container fluid >
+              <br/>
+              <Row>
+              <Col xs="3">
+                  <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
+              </Col>
+              <Col xs="7">
+                  <h1 style={{fontSize:'25px', color:'White'}}>Profil utilisateur</h1>
+              </Col>
+              </Row>
+              <br/>
+              <Col>
+                  <FormGroup>
+                      <Button outline block color="info" type="text" id="userfirstname">{this.props.passedVal.userfirstname} </Button>
+                  </FormGroup>
+
+                  <FormGroup>
+                      <Button outline block color="info" type="text" id="userlastname"> {this.props.passedVal.userlastname} </Button>
+                  </FormGroup>
+
+                  <FormGroup>
+                        <Button outline block color="info" type="number" id="userage" >{this.props.passedVal.userage} </Button>
+                  </FormGroup>
+
+                  <FormGroup>
+                        <Button outline block color="info" type="email" id="nameInput">{this.props.passedVal.useremail} </Button>
+                  </FormGroup>
+
+                </Col>
+
+                 <Button color='success' block onClick={this.props.cb}>Modifier</Button>
             </Container>
-            
+          <br/>
+
         </div>
     )
   }

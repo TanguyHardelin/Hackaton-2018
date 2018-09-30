@@ -13,6 +13,7 @@ import db from './config/Firestore'
 import fire from './config/Fire';
 import UserProfileModification from './UserProfileModification'
 import UserProfile from './UserProfile'
+import FooterPage from './Footerpage'
 
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 // import ResearchCollaborators from './ResearchCollaborators'
@@ -43,12 +44,12 @@ class Home extends React.Component{
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.getPosts = this.getPosts.bind(this);
 
-
     this.state = {
       userfirstname: '',
       userlastname: '',
       userage: '',
       userimageurl: '',
+      useremail: ' ',
       activeTab: '1',
       dropdownOpen: false,
       modal: false,
@@ -70,16 +71,17 @@ class Home extends React.Component{
     this.modifyUser=this.modifyUser.bind(this)
     this.updateMarker = this.updateMarker.bind(this);
     this.setFilter=this.setFilter.bind(this)
+    this.getCurrentUserInfos = this.getCurrentUserInfos.bind(this);
 
-    
+
     this.icon= new L.Icon({
       iconUrl: '/images/poi.png',
       iconSize: new L.Point(40, 40)
     }
-   
+
   );
     // setInterval(this.updateMarker,500);
-    
+
     this.getPosts().then((data)=>{
       this.updateMarker(data);
       this.updateState()
@@ -103,16 +105,20 @@ class Home extends React.Component{
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             docRef = doc.data();
-            self.state.userinformation.userfirstname = docRef.firstName;
-            self.state.userinformation.userlastname = docRef.lastName;
-            self.state.userinformation.userage = docRef.age;
-            self.state.userinformation.userimageurl = docRef.imageurl || ' ';
+            self.state.userfirstname = docRef.firstName;
+            self.state.userlastname = docRef.lastName;
+            self.state.userage = docRef.age;
+            self.state.userimageurl = docRef.imageurl || ' ';
+            self.state.useremail = docRef.email;
             //console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
         });
+                        self.setState(self.state);
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
+
+    return docRef;
   }
 
   getPosts() {
@@ -148,13 +154,13 @@ class Home extends React.Component{
     console.log(postList)
     return postList;
     })
-    
+
   }
 
   updateMarker(data) {
     //TODO get info from API
     let self=this;
-    
+
     let tab=self.state.markersInfos
     for(let i=0;i<tab.length;i++){
       let pos=[tab[i].latitude, tab[i].longitude];
@@ -192,7 +198,7 @@ class Home extends React.Component{
         let ic=new L.Icon({
           iconUrl: image_url,
           iconSize: new L.Point(40, 40)
-          
+
         }
       );
 
@@ -208,13 +214,14 @@ class Home extends React.Component{
       remuneration:tab[i].remuneration
     })
   }
-        
-    
+
+
   }
 
   updateState(){
     console.log(this.state)
     this.setState(this.state);
+    // console.log(this.state.userfirstName);
   }
 
   toggle(tab) {
@@ -282,8 +289,8 @@ class Home extends React.Component{
 
   render(){
     return(
-        <div>
-          <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.getPosts} setFilter={this.setFilter}/>
+        <div style={{backgroundColor:"#2c3142"}}>
+          <MyNavBar  getUserInformation={this.toggleModalUser} updateMarker={this.getPosts} setFilter={this.setFilter}/>
           <Nav id='titiBar' justified fill pills >
             <NavItem>
               <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
@@ -298,11 +305,11 @@ class Home extends React.Component{
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
-              <Map center={mapCenter} zoom={zoomLevel} zoomControl={false}>
+              <Map center={mapCenter} zoom={zoomLevel} zoomControl={false} style={{height:"400px"}}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-               
-                
+
+
                 {this.state.markers.map((element)=>(
                       
                     <Marker key position={element.pos} icon={element.icon}>
@@ -316,7 +323,7 @@ class Home extends React.Component{
                               <Col xs="10">
                                 {console.log(element)}
                                 <h4>{element.userfirstName+' '+element.userlastName}</h4>
-                                
+
                               </Col>
                               </Row>
                               <Row><h7><b>Profil recherché:</b> {element.category}</h7></Row>
@@ -330,27 +337,27 @@ class Home extends React.Component{
                           <div><h7><b>Description de l'annonce:</b> </h7><p>{element.description}</p></div>
                           </Row>
                           </Container>
-                          
+
                         </Popup>
                     </Marker>
 
                 ))}
-               
+
               </Map>
             </TabPane>
-            <TabPane tabId="2">
+            <TabPane tabId="2" >
               <ListGroup>
               {this.state.markers.map((element)=>(
-                <ListGroupItem key>
+                <ListGroupItem key style={{backgroundColor:"#464c5e", color:'white'}}>
                   <Container fluid>
                     <Row>
                       <Col xs="2">
                         <img src="/images/icon_profile.png" />
                       </Col>
-                      <Col xs="10">
+                      <Col xs="10" >
                         {console.log(element)}
                         <h2>{element.userfirstName+' '+element.userlastName}</h2>
-                        <h5>{element.category}</h5>
+                        <h5>Profil recherché : {element.category}</h5>
                         <p style={{'textAlign':'justify',textJustify:'interWord'}}>{element.description}</p>
                       </Col>
                     </Row>
@@ -362,12 +369,14 @@ class Home extends React.Component{
             </TabPane>
           </TabContent>
           <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
-            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser}/>:<UserProfileModification />}
+            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state}/>:<UserProfileModification  passedVal={this.state}/>}
+            {/* {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state.userfirstname}/>:<UserProfileModification />} */}
           </Modal>
-
+        <FooterPage/>
         </div>
     )
   }
 };
+
 
 export default Home;

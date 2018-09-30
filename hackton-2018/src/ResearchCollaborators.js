@@ -30,7 +30,7 @@ import Home from './Home'
                         <option>Rap</option>
                         <option>Rock</option>
                         <option>Reggae</option>
-                        <option>RnB</option>     
+                        <option>RnB</option>
 */
 /*
 <option>Guitare acoustique</option>
@@ -54,7 +54,7 @@ import Home from './Home'
                         <option>Saxophone</option>
                         <option>Clarinette</option>
                         <option>DJ</option>
-                    </Input>    
+                    </Input>
 */
 
 /*
@@ -79,7 +79,7 @@ import Home from './Home'
                         <option>Rock</option>
                         <option>Reggae</option>
                         <option>RnB</option>
-                    </Input>   
+                    </Input>
                 */
 class ResearchCollaborators extends React.Component {
 
@@ -170,9 +170,6 @@ class ResearchCollaborators extends React.Component {
           console.log("Error getting documents: ", error);
       });
 
-
-
-
       this.props.updateMarker();
     }
 
@@ -198,7 +195,7 @@ class ResearchCollaborators extends React.Component {
             <Form>
 
                 <FormGroup>
-                    <Label for="exampleSelect">Catégories</Label>
+                    <Label for="exampleSelect">Catégorie recherchée</Label>
                     <Input type="select" name="select" id="categoryInput">
                         <option>Musicien</option>
                         <option>Chanteur</option>
@@ -210,33 +207,22 @@ class ResearchCollaborators extends React.Component {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="specialityInput">Spécialité</Label>
                     <Input type="text" id="specialityInput" placeholder="Specialité" />
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="specialityInput">Spécialité</Label>
                     <Input type="text" id="specialityInput" placeholder="Specialité" />
                 </FormGroup>
-      
 
                 <FormGroup>
-                    <Label for="styleInput">Style</Label>
                     <Input type="text" id="styleInput" placeholder="Style" />
-                         
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="styleInput">Description</Label>
                     <Input type="text" id="descriptifInput" placeholder="Texte descriptif de votre annonce" />
                 </FormGroup>
 
-                <FormGroup>
-                    <Label for="styleInput">Rémunération</Label>
-                    <Input type="number" id="remunerationInput" placeholder="0" />
-                </FormGroup>
-
-                <Label for="mapForm">Localisation</Label>
+                <Label for="mapForm">Selectionnez une position sur la carte :</Label>
                 <Map id='mapForm' center={[48.42333164, -71.055499778]} zoom={10} zoomControl={false} style={{with:'200px',height:'200px'}} onclick={this.handleMapClick}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
