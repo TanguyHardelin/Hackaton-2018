@@ -69,7 +69,7 @@ class MyNavBar extends React.Component{
                 <Navbar color="light" light expand="md">
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} inNavbar>
                     <DropdownToggle nav>
-                        <img src="/images/Logo_v2_2.png" style={{width:'50px',height:'50px'}}/>
+                        <img src="/images/Logo2.png" style={{width:'50px',height:'50px'}}/>
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem header>Mon profil</DropdownItem>

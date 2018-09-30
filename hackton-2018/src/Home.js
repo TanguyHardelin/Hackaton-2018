@@ -86,25 +86,25 @@ class Home extends React.Component{
 
                 switch(doc.data().category) {
                     case "Peintre":
-                          image_url = "/images/paint.svg"
+                          image_url = "/images/paint_fonce.png"
                           break;
                     case "Musicien":
-                          image_url = "/images/note.svg"
+                          image_url = "/images/note_fonce.png"
                           break;
                     case "Acteur":
-                          image_url = "/images/actor.svg"
+                          image_url = "/images/actor_fonce.png"
                           break;
                     case "Photographe":
-                          image_url = "/images/note.svg"
+                          image_url = "/images/note_fonce.png"
                           break;
                     case "Chanteur":
-                          image_url = "/images/sing.svg"
+                          image_url = "/images/sing_fonce.png"
                           break;
                     case "Sculpteur":
-                          image_url = "/images/sculptor.svg"
+                          image_url = "/images/sculptor_fonce.png"
                           break;
                     case "Realisateur":
-                          image_url = "/images/clapboard.svg"
+                          image_url = "/images/clapboard_fonce.png"
                           break;
                     default:
                           break;
@@ -114,7 +114,7 @@ class Home extends React.Component{
                     iconUrl: image_url,
                     popupAnchor: null,
                     shadowUrl: null,
-                    iconSize: new L.Point(60, 60)
+                    iconSize: new L.Point(40, 40)
                     //className: 'leaflet-div-icon'
                   }
                 );
