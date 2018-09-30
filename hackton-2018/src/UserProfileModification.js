@@ -20,10 +20,8 @@ import {
   import MyNavBar from './MyNavBar';
 
 class UserProfileModification extends React.Component{
- 
-  
+
   render(){
-    
     return(
         <div>
             <Container fluid>
@@ -64,7 +62,7 @@ class UserProfileModification extends React.Component{
                 </Form>
                 <Button color='success' block>OK</Button>
             </Container>
-            
+
         </div>
     )
   }

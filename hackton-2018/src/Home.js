@@ -13,6 +13,7 @@ import db from './config/Firestore'
 import fire from './config/Fire';
 import UserProfileModification from './UserProfileModification'
 import UserProfile from './UserProfile'
+import FooterPage from './Footerpage'
 
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 // import ResearchCollaborators from './ResearchCollaborators'
@@ -43,12 +44,12 @@ class Home extends React.Component{
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.updateMarker = this.updateMarker.bind(this);
 
-
     this.state = {
       userfirstname: '',
       userlastname: '',
       userage: '',
       userimageurl: '',
+      useremail: ' ',
       activeTab: '1',
       dropdownOpen: false,
       modal: false,
@@ -65,6 +66,7 @@ class Home extends React.Component{
     this.updateState=this.updateState.bind(this);
     this.modifyUser=this.modifyUser.bind(this)
     this.updateMarker = this.updateMarker.bind(this);
+    this.getCurrentUserInfos = this.getCurrentUserInfos.bind(this);
 
     this.icon= new L.Icon({
       iconUrl: '/images/poi.png',
@@ -91,16 +93,21 @@ class Home extends React.Component{
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             docRef = doc.data();
-            self.userfirstname = docRef.firstName;
-            self.userlastname = docRef.lastName;
-            self.userage = docRef.age;
-            self.userimageurl = docRef.imageurl || ' ';
-            console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
+            self.state.userfirstname = docRef.firstName;
+            self.state.userlastname = docRef.lastName;
+            self.state.userage = docRef.age;
+            self.state.userimageurl = docRef.imageurl || ' ';
+            self.state.useremail = docRef.email || ' ';
+            console.log( "get current user : "+ self.state.userfirstname +" "+   self.state.userlastname + ' '+ self.state.useremail);
+
         });
+                        self.setState(self.state);
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
+
+    return docRef;
   }
 
   getPosts() {
@@ -193,6 +200,7 @@ class Home extends React.Component{
   updateState(){
     console.log('UPDATE STATE')
     this.setState(this.state);
+    // console.log(this.state.userfirstName);
   }
 
   toggle(tab) {
@@ -214,7 +222,7 @@ class Home extends React.Component{
 
   render(){
     return(
-        <div>
+        <div style={{backgroundColor:"#2c3142"}}>
           <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker}/>
           <Nav justified fill pills>
             <NavItem>
@@ -238,7 +246,7 @@ class Home extends React.Component{
 
                     </Marker>
                 ))}
-                <Marker attribution='<p>TOTO</p>' position={[48.39820893678183, -71.15295410156251]} icon={this.icon}>4
+                <Marker attribution=' ' position={[48.39820893678183, -71.15295410156251]} icon={this.icon}>4
                 <Tooltip permanent>
                        <span>100$</span>
                 </Tooltip>
@@ -286,12 +294,14 @@ class Home extends React.Component{
             </TabPane>
           </TabContent>
           <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
-            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser}/>:<UserProfileModification />}
+            {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state}/>:<UserProfileModification />}
+            {/* {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state.userfirstname}/>:<UserProfileModification />} */}
           </Modal>
-
+        <FooterPage/>
         </div>
     )
   }
 };
+
 
 export default Home;
