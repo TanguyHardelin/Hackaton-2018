@@ -95,6 +95,8 @@ class ResearchCollaborators extends React.Component {
       userlastname: '',
       userage: '',
       userimageurl: '',
+      userphone: '',
+      useremail: '',
       location: '',
       searchrequest: '',
       marker:new Array(),
@@ -138,6 +140,8 @@ class ResearchCollaborators extends React.Component {
               self.userlastname = docRef.lastName;
               self.userage = docRef.age;
               self.userimageurl = docRef.imageurl || ' ';
+              self.userphone = docRef.phone || ' ';
+              self.useremail = docRef.email || ' ';
               // this.userAge = docRef.age;
               // this.userimageurl = docRef.imageurl;
               // console.log("USERFIRSTNAME : "+this.userfirstname);
@@ -151,6 +155,8 @@ class ResearchCollaborators extends React.Component {
                   userLastName: self.userlastname,
                   userAge: self.userage,
                   userimageurl: self.userimageurl,
+                  useremail: self.useremail,
+                  userphone: self.userphone,
                   latitude: self.latitude,
                   longitude: self.longitude,
                   category: category,
@@ -171,7 +177,7 @@ class ResearchCollaborators extends React.Component {
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-      
+
       this.props.updateMarker();
     }
 
@@ -192,7 +198,6 @@ class ResearchCollaborators extends React.Component {
   render() {
     return (
       <div>
-
         <Container fluid>
             <Form>
                 <FormGroup>

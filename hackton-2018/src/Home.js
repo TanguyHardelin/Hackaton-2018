@@ -109,7 +109,8 @@ class Home extends React.Component{
             self.state.userlastname = docRef.lastName;
             self.state.userage = docRef.age;
             self.state.userimageurl = docRef.imageurl || ' ';
-            self.state.useremail = docRef.email;
+            self.state.useremail = docRef.email || ' ';
+            self.state.userphone = docRef.phone || ' ';
             //console.log( "get current user : "+ self.userfirstname +" "+   self.userlastname);
         });
                         self.setState(self.state);
@@ -134,6 +135,8 @@ class Home extends React.Component{
               userlastName: doc.data().userLastName,
               userAge: doc.data().userAge,
               userimage: doc.data().userimageurl,
+              userphone: doc.data().userphone,
+              useremail: doc.data().useremail,
               speciality: doc.data().speciality,
               description : doc.data().descriptif,
               latitude: doc.data().latitude,
@@ -230,6 +233,7 @@ class Home extends React.Component{
 
       this.state.activeTab= tab
     }
+
     this.updateState()
   }
   toggleModalUser(){
@@ -293,17 +297,17 @@ class Home extends React.Component{
           <MyNavBar getUserInformation={this.toggleModalUser} updateMarker={this.updateMarker} passedVal={this.state}  setFilter={this.setFilter}/>
           <Nav justified fill pills>
             <NavItem>
-              <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
+              <NavLink style={{ color:'white'}} className={classnames({ active: this.state.activeTab === '1' }) } onClick={() => { this.toggle('1'); }}>
                 Carte
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
-                Liste
+              <NavLink style={{color:'white'}} className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
+                Liste d'annonces
               </NavLink>
             </NavItem>
           </Nav>
-          <TabContent activeTab={this.state.activeTab}>
+          <TabContent activeTab={this.state.activeTab} >
             <TabPane tabId="1">
               <Map center={mapCenter} zoom={zoomLevel} zoomControl={false} style={{height:"400px"}}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -336,6 +340,12 @@ class Home extends React.Component{
                               <Row>
                           <div><h7><b>Description de l'annonce:</b> </h7><p>{element.description}</p></div>
                           </Row>
+                          <Row>
+                            {/* <Col xs="5">
+                              <h4>Adresse courriel : {element.useremail}</h4>
+                              <h4>Cellulaire : {element.userphone}</h4>
+                            </Col> */}
+                          </Row>
                           </Container>
 
                         </Popup>
@@ -346,6 +356,7 @@ class Home extends React.Component{
               </Map>
             </TabPane>
             <TabPane tabId="2" >
+
               <ListGroup>
               {this.state.markers.map((element)=>(
                 <ListGroupItem key style={{backgroundColor:"#464c5e", color:'white'}}>
@@ -366,6 +377,11 @@ class Home extends React.Component{
               ))}
 
               </ListGroup>
+              <br/><br/><br/><br/><br/>
+              <br/><br/><br/><br/><br/>
+              <br/><br/><br/><br/><br/>
+              <br/><br/><br/><br/><br/>
+              <br/><br/><br/><br/><br/>
             </TabPane>
           </TabContent>
           <Modal isOpen={this.state.modal} toggle={this.toggleModalUser} className={this.props.className}>
