@@ -352,7 +352,7 @@ class Home extends React.Component{
                             }
                               </Row>
                               <Row><h7><b>Céllulaire:</b> {element.userphone}</h7></Row>
-                              <Row><h7><b>Emails:</b> {element.useremail}</h7></Row>
+                              <Row><h7><b>Email:</b> {element.useremail}</h7></Row>
                               <Row>
                               <Container>
                                 <Row>
@@ -384,7 +384,7 @@ class Home extends React.Component{
               {this.state.markers.map((element)=>(
                 <ListGroupItem key style={{backgroundColor:"#464c5e", color:'white'}}>
                   <Container fluid>
-                            <Row>
+                            <Row style={{backgroundColor:"#393e51", padding:"10px"}}>
                               <Col xs="2">
                                 <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
                               </Col>
@@ -394,7 +394,7 @@ class Home extends React.Component{
                                 <h5>{element.userAge} ans</h5>
                               </Col>
                               </Row>
-                              <Row><h7><b>Profil recherché:</b> {element.category}</h7></Row>
+                              <Row style={{marginTop:"10px"}}><h7><b>Profil recherché:</b> {element.category}</h7></Row>
                               <Row><h7><b>Style:</b> {element.speciality}</h7></Row>
                               <Row><h7><b>Niveau:</b> {element.xp}</h7></Row>
                               <Row>
@@ -403,23 +403,17 @@ class Home extends React.Component{
                             <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
                             }
                               </Row>
-                              <Row><h7><b>Céllulaire:</b> {element.userphone}</h7></Row>
-                              <Row><h7><b>Emails:</b> {element.useremail}</h7></Row>
+                              <Row><h7><b>numero de telephone:</b> {element.xp}</h7></Row>
+                              <Row><h7><b>emails:</b> {element.xp}</h7></Row>
                               <Row>
                               <Container>
-                                <Row>
+                                <Row style={{marginTop:"10px"}}>
                                 <h7><b>Description de l'annonce:</b></h7>
                                 </Row>
                                 <Row>
                                 <p style={{textJustify:'justify',textJustify:'inter-word'}}>{element.description}</p>
                                 </Row>
                               </Container>
-                          </Row>
-                          <Row>
-                            {/* <Col xs="5">
-                              <h4>Adresse courriel : {element.useremail}</h4>
-                              <h4>Cellulaire : {element.userphone}</h4>
-                            </Col> */}
                           </Row>
                           </Container>
                 </ListGroupItem>

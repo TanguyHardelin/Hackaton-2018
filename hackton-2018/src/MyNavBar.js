@@ -93,7 +93,7 @@ class MyNavBar extends React.Component{
     render(){
         return (
             <div>
-                <Navbar style={{backgroundColor:"#2c3142", color:"white"}}     color="dark" light expand="md">
+                <Navbar style={{backgroundColor:"#2c3142", color:"white"}} light expand="md">
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} inNavbar>
                     <DropdownToggle nav>
                         <img src="/images/Logo2.png" style={{width:'50px',height:'50px'}}/>
@@ -117,7 +117,7 @@ class MyNavBar extends React.Component{
                         <Button outline color="secondary" onClick={()=>this.removeElementFromSearch(e)}>{e} x</Button>
                     ))}
 
-                    <Input id='rechercheInput' placeholder="Ajouter un filtre" />{' '}
+                    <Input id='rechercheInput' placeholder="Ajouter un filtre" style={{backgroundColor:"#545b72", color:"white"}} />{' '}
                     <Button color="link" onClick={this.launchResearch}>🔎</Button>
                 </Navbar>
 
