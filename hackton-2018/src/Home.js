@@ -139,6 +139,7 @@ class Home extends React.Component{
               latitude: doc.data().latitude,
               longitude: doc.data().longitude,
               category: doc.data().category,
+              xp: doc.data().xp,
               remuneration: doc.data().remuneration,
             }
 
@@ -162,6 +163,7 @@ class Home extends React.Component{
     let self=this;
 
     let tab=self.state.markersInfos
+    console.log(tab)
     for(let i=0;i<tab.length;i++){
       let pos=[tab[i].latitude, tab[i].longitude];
 
@@ -177,6 +179,9 @@ class Home extends React.Component{
                 image_url = "/images/note_"+indice+".png"
                 break;
           case "Acteur":
+                image_url = "/images/actor_"+indice+".png"
+                break;
+          case "Comédien":
                 image_url = "/images/actor_"+indice+".png"
                 break;
           case "Photographe":
@@ -207,6 +212,8 @@ class Home extends React.Component{
       userlastName:tab[i].userlastName,
       image_url:image_url,
       id:i,
+      xp:tab[i].xp,
+      userAge:tab[i].userAge,
       userimage:tab[i].userimage,
       speciality:tab[i].speciality,
       category:tab[i].category,
@@ -309,9 +316,9 @@ class Home extends React.Component{
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
 
-
+               
                 {this.state.markers.map((element)=>(
-
+                    
                     <Marker key position={element.pos} icon={element.icon}>
                         <Popup key position={element.pos}>
                         {console.log(element.pos)}
@@ -323,18 +330,29 @@ class Home extends React.Component{
                               <Col xs="10">
                                 {console.log(element)}
                                 <h4>{element.userfirstName+' '+element.userlastName}</h4>
-
+                                <h5>{element.userAge} ans</h5>
                               </Col>
                               </Row>
                               <Row><h7><b>Profil recherché:</b> {element.category}</h7></Row>
+                              <Row><h7><b>Style:</b> {element.speciality}</h7></Row>
+                              <Row><h7><b>Niveau:</b> {element.xp}</h7></Row>
                               <Row>
                             {element.remuneration!='0'?
                             <h7><b>Rémunération: </b><Badge color="warning">{element.remuneration} $</Badge></h7>:
                             <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
                             }
                               </Row>
+                              <Row><h7><b>numero de telephone:</b> {element.xp}</h7></Row>
+                              <Row><h7><b>emails:</b> {element.xp}</h7></Row>
                               <Row>
-                          <div><h7><b>Description de l'annonce:</b> </h7><p>{element.description}</p></div>
+                              <Container>
+                                <Row>
+                                <h7><b>Description de l'annonce:</b></h7>
+                                </Row>
+                                <Row>
+                                <p style={{textJustify:'justify',textJustify:'inter-word'}}>{element.description}</p>
+                                </Row>
+                              </Container>
                           </Row>
                           </Container>
 
@@ -350,18 +368,38 @@ class Home extends React.Component{
               {this.state.markers.map((element)=>(
                 <ListGroupItem key style={{backgroundColor:"#464c5e", color:'white'}}>
                   <Container fluid>
-                    <Row>
-                      <Col xs="2">
-                        <img src="/images/icon_profile.png" />
-                      </Col>
-                      <Col xs="10" >
-                        {console.log(element)}
-                        <h2>{element.userfirstName+' '+element.userlastName}</h2>
-                        <h5>Profil recherché : {element.category}</h5>
-                        <p style={{'textAlign':'justify',textJustify:'interWord'}}>{element.description}</p>
-                      </Col>
-                    </Row>
-                  </Container>
+                            <Row>
+                              <Col xs="2">
+                                <img src="/images/icon_profile.png" style={{width:'50px',height:'50px'}}/>
+                              </Col>
+                              <Col xs="10">
+                                {console.log(element)}
+                                <h4>{element.userfirstName+' '+element.userlastName}</h4>
+                                <h5>{element.userAge} ans</h5>
+                              </Col>
+                              </Row>
+                              <Row><h7><b>Profil recherché:</b> {element.category}</h7></Row>
+                              <Row><h7><b>Style:</b> {element.speciality}</h7></Row>
+                              <Row><h7><b>Niveau:</b> {element.xp}</h7></Row>
+                              <Row>
+                            {element.remuneration!='0'?
+                            <h7><b>Rémunération: </b><Badge color="warning">{element.remuneration} $</Badge></h7>:
+                            <h7><b>Rémunération: </b><Badge>Bénévolat</Badge></h7>
+                            }
+                              </Row>
+                              <Row><h7><b>numero de telephone:</b> {element.xp}</h7></Row>
+                              <Row><h7><b>emails:</b> {element.xp}</h7></Row>
+                              <Row>
+                              <Container>
+                                <Row>
+                                <h7><b>Description de l'annonce:</b></h7>
+                                </Row>
+                                <Row>
+                                <p style={{textJustify:'justify',textJustify:'inter-word'}}>{element.description}</p>
+                                </Row>
+                              </Container>
+                          </Row>
+                          </Container>
                 </ListGroupItem>
               ))}
 

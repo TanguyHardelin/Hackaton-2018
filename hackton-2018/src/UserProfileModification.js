@@ -73,7 +73,7 @@ class UserProfileModification extends React.Component{
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleEmail">Description utilisateur</Label>
-                        <Input type="textarea" id="nameInput" placeholder="Blablala" />
+                        <Input type="textarea" id="nameInput" placeholder="Descriptif" />
                     </FormGroup>
                 </Form>
                 <Button color='success' block>OK</Button>
