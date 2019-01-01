@@ -7,8 +7,8 @@ import 'mdbreact/dist/css/mdb.css';
 class FooterPage extends React.Component {
     render(){
         return(
-            <Footer color="#2c3142" className="page-footer font-small pt-4 mt-4">
-                <Container fluid className="text-center text-md-left">
+            <Footer color="#2c3142" className="page-footer font-small pt-4 mt-4 ">
+                <Container fluid className="text-center text-md-left ">
                     <Row>
                     <Col md="8" >
                         <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">A propos</h5>

@@ -321,7 +321,7 @@ class Home extends React.Component{
           </Nav>
           <TabContent activeTab={this.state.activeTab} >
             <TabPane tabId="1">
-              <Map center={mapCenter} zoom={zoomLevel} zoomControl={false} style={{height:"400px"}}>
+              <Map center={mapCenter} zoom={zoomLevel} zoomControl={false} style={{height:"590px"}}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
 
@@ -425,7 +425,7 @@ class Home extends React.Component{
             {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state}/>:<UserProfileModification  passedVal={this.state}/>}
             {/* {this.state.userProfileModification==false?<UserProfile cb={this.modifyUser} passedVal={this.state.userfirstname}/>:<UserProfileModification />} */}
           </Modal>
-        <FooterPage/>
+        <FooterPage style={{ position: 'fixed', height: '100%', bottom: '0', width: '100%'}}/>
         </div>
     )
   }
